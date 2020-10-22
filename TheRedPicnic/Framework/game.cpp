@@ -160,6 +160,8 @@ Game::Process(float deltaTime)
 	// Update the game world simulation:
 
 	m_pTest->Process(deltaTime);
+	m_pInputHandler->GetKeyPressed(SDLK_UP);
+	
 
 	//Process each entity, partical and gui elements
 

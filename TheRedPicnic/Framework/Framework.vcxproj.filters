@@ -13,60 +13,120 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Resource Management">
+      <UniqueIdentifier>{ed05285c-b346-4698-9f34-ac5e0960efb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SDL Render">
+      <UniqueIdentifier>{13ec481d-1c38-4770-9495-ae565774de89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Menus">
+      <UniqueIdentifier>{4e0eea19-6d7e-4393-80cb-0ec1ab61f7aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI Elements">
+      <UniqueIdentifier>{e65c0913-c4b0-4747-adf4-eb76362f9605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game States">
+      <UniqueIdentifier>{352fa514-7b3f-4a72-85bd-dbf05eca3ed9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity Objects">
+      <UniqueIdentifier>{e06c8003-4426-4d31-97a1-a1ebf502e38b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Main">
+      <UniqueIdentifier>{b58de19c-ad6e-41c2-910b-f040b2740e1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI Elements">
+      <UniqueIdentifier>{0f5f5e7a-5101-4a6c-9e77-f1a67133541c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game States">
+      <UniqueIdentifier>{e9a5482e-98ba-4a66-9bd6-d6ae4adfae1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity Objects">
+      <UniqueIdentifier>{aecf090b-a22a-4590-8150-b18a49d46f64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Main">
+      <UniqueIdentifier>{83cf4c44-2429-4e20-bf3d-5c531dbf7c89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SDL Render">
+      <UniqueIdentifier>{f3000ec6-0a04-4072-b0f2-9772ad3726fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resource Management">
+      <UniqueIdentifier>{c95912d0-34e3-41d5-bfcc-ff4f1d824535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menus">
+      <UniqueIdentifier>{bfce224e-fe5c-4001-b706-9eb08f1ee903}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resource Management\Input">
+      <UniqueIdentifier>{5be08351-602a-4938-a0a8-719d07a7ba47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resource Management\Output">
+      <UniqueIdentifier>{4babe255-ef33-4632-a10b-0c760e7c47ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resource Management\Textures">
+      <UniqueIdentifier>{0eb4d8f4-4395-4633-9567-6a0e12822ee2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Resource Management\Input">
+      <UniqueIdentifier>{75a1c00f-b7cb-43a6-8d9c-911a131409e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Resource Management\Output">
+      <UniqueIdentifier>{ae811c8e-1b0d-4b49-bbaf-23ec8bb0f079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Resource Management\Textures">
+      <UniqueIdentifier>{87d985f8-f361-48c3-94c7-cb33b405b4ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="backbuffer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\SDL Render</Filter>
     </ClInclude>
     <ClInclude Include="entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inputhandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="logmanager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Entity Objects</Filter>
     </ClInclude>
     <ClInclude Include="sprite.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\SDL Render</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="inputhandler.h">
+      <Filter>Header Files\Resource Management\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="logmanager.h">
+      <Filter>Header Files\Resource Management\Output</Filter>
     </ClInclude>
     <ClInclude Include="texture.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Resource Management\Textures</Filter>
     </ClInclude>
     <ClInclude Include="texturemanager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Resource Management\Textures</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\SDL Render</Filter>
     </ClCompile>
     <ClCompile Include="entity.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Entity Objects</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="inputhandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="logmanager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Main</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Main</Filter>
     </ClCompile>
     <ClCompile Include="sprite.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\SDL Render</Filter>
+    </ClCompile>
+    <ClCompile Include="inputhandler.cpp">
+      <Filter>Source Files\Resource Management\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="logmanager.cpp">
+      <Filter>Source Files\Resource Management\Output</Filter>
     </ClCompile>
     <ClCompile Include="texture.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Resource Management\Textures</Filter>
     </ClCompile>
     <ClCompile Include="texturemanager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Resource Management\Textures</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
