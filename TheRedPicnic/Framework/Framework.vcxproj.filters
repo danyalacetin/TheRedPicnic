@@ -55,23 +55,11 @@
     <Filter Include="Source Files\Menus">
       <UniqueIdentifier>{bfce224e-fe5c-4001-b706-9eb08f1ee903}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Resource Management\Input">
-      <UniqueIdentifier>{5be08351-602a-4938-a0a8-719d07a7ba47}</UniqueIdentifier>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{c0947a05-e3c3-4161-ae29-bbb0b64c181c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Resource Management\Output">
-      <UniqueIdentifier>{4babe255-ef33-4632-a10b-0c760e7c47ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Resource Management\Textures">
-      <UniqueIdentifier>{0eb4d8f4-4395-4633-9567-6a0e12822ee2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Resource Management\Input">
-      <UniqueIdentifier>{75a1c00f-b7cb-43a6-8d9c-911a131409e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Resource Management\Output">
-      <UniqueIdentifier>{ae811c8e-1b0d-4b49-bbaf-23ec8bb0f079}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Resource Management\Textures">
-      <UniqueIdentifier>{87d985f8-f361-48c3-94c7-cb33b405b4ea}</UniqueIdentifier>
+    <Filter Include="Source Files\Utilities">
+      <UniqueIdentifier>{3bcb731a-8bdb-432a-8518-6633b8072968}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -87,17 +75,56 @@
     <ClInclude Include="game.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>
+    <ClInclude Include="state.h">
+      <Filter>Header Files\Game States</Filter>
+    </ClInclude>
+    <ClInclude Include="gamestate.h">
+      <Filter>Header Files\Game States</Filter>
+    </ClInclude>
+    <ClInclude Include="menustate.h">
+      <Filter>Header Files\Game States</Filter>
+    </ClInclude>
+    <ClInclude Include="gameutils.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="uielement.h">
+      <Filter>Header Files\GUI Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="image.h">
+      <Filter>Header Files\GUI Elements</Filter>
+    </ClInclude>
     <ClInclude Include="inputhandler.h">
-      <Filter>Header Files\Resource Management\Input</Filter>
+      <Filter>Header Files\Resource Management</Filter>
     </ClInclude>
     <ClInclude Include="logmanager.h">
-      <Filter>Header Files\Resource Management\Output</Filter>
+      <Filter>Header Files\Resource Management</Filter>
     </ClInclude>
     <ClInclude Include="texture.h">
-      <Filter>Header Files\Resource Management\Textures</Filter>
+      <Filter>Header Files\Resource Management</Filter>
     </ClInclude>
     <ClInclude Include="texturemanager.h">
-      <Filter>Header Files\Resource Management\Textures</Filter>
+      <Filter>Header Files\Resource Management</Filter>
+    </ClInclude>
+    <ClInclude Include="fontmanager.h">
+      <Filter>Header Files\Resource Management</Filter>
+    </ClInclude>
+    <ClInclude Include="text.h">
+      <Filter>Header Files\Resource Management</Filter>
+    </ClInclude>
+    <ClInclude Include="resourcemanager.h">
+      <Filter>Header Files\Resource Management</Filter>
+    </ClInclude>
+    <ClInclude Include="label.h">
+      <Filter>Header Files\GUI Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>Header Files\GUI Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="menu.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="gamemenustate.h">
+      <Filter>Header Files\Game States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -107,26 +134,65 @@
     <ClCompile Include="entity.cpp">
       <Filter>Source Files\Entity Objects</Filter>
     </ClCompile>
+    <ClCompile Include="sprite.cpp">
+      <Filter>Source Files\SDL Render</Filter>
+    </ClCompile>
+    <ClCompile Include="inputhandler.cpp">
+      <Filter>Source Files\Resource Management</Filter>
+    </ClCompile>
+    <ClCompile Include="logmanager.cpp">
+      <Filter>Source Files\Resource Management</Filter>
+    </ClCompile>
+    <ClCompile Include="state.cpp">
+      <Filter>Source Files\Game States</Filter>
+    </ClCompile>
     <ClCompile Include="game.cpp">
       <Filter>Source Files\Main</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files\Main</Filter>
     </ClCompile>
-    <ClCompile Include="sprite.cpp">
-      <Filter>Source Files\SDL Render</Filter>
+    <ClCompile Include="gamestate.cpp">
+      <Filter>Source Files\Game States</Filter>
     </ClCompile>
-    <ClCompile Include="inputhandler.cpp">
-      <Filter>Source Files\Resource Management\Input</Filter>
+    <ClCompile Include="menustate.cpp">
+      <Filter>Source Files\Game States</Filter>
     </ClCompile>
-    <ClCompile Include="logmanager.cpp">
-      <Filter>Source Files\Resource Management\Output</Filter>
+    <ClCompile Include="gameutils.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="uielement.cpp">
+      <Filter>Source Files\GUI Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="image.cpp">
+      <Filter>Source Files\GUI Elements</Filter>
     </ClCompile>
     <ClCompile Include="texture.cpp">
-      <Filter>Source Files\Resource Management\Textures</Filter>
+      <Filter>Source Files\Resource Management</Filter>
     </ClCompile>
     <ClCompile Include="texturemanager.cpp">
-      <Filter>Source Files\Resource Management\Textures</Filter>
+      <Filter>Source Files\Resource Management</Filter>
+    </ClCompile>
+    <ClCompile Include="fontmanager.cpp">
+      <Filter>Source Files\Resource Management</Filter>
+    </ClCompile>
+    <ClCompile Include="text.cpp">
+      <Filter>Source Files\Resource Management</Filter>
+    </ClCompile>
+    <ClCompile Include="resourcemanager.cpp">
+      <Filter>Source Files\Resource Management</Filter>
+    </ClCompile>
+    <ClCompile Include="label.cpp">
+      <Filter>Source Files\GUI Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>Source Files\GUI Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="menu.cpp">
+      <Filter>Source Files\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="gamemenustate.cpp">
+      <Filter>Source Files\Game States</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

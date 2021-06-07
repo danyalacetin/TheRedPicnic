@@ -56,13 +56,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\API\API-SDL\SDL2-devel-2.0.10-VC\SDL2-2.0.10\include\;$(SolutionDir)\API\API-SDL\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\API\API-SDL\SDL2-devel-2.0.10-VC\SDL2-2.0.10\include\;$(SolutionDir)\API\API-SDL\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\include;$(SolutionDir)\API\API-SDL\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\API\API-SDL\SDL2-devel-2.0.10-VC\SDL2-2.0.10\lib\x86;$(SolutionDir)\API\API-SDL\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\lib\x86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\API\API-SDL\SDL2-devel-2.0.10-VC\SDL2-2.0.10\lib\x86;$(SolutionDir)\API\API-SDL\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\lib\x86;$(SolutionDir)\API\API-SDL\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\lib\x86\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -85,24 +85,50 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="backbuffer.h" />
+    <ClInclude Include="button.h" />
     <ClInclude Include="entity.h" />
+    <ClInclude Include="fontmanager.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="gamemenustate.h" />
+    <ClInclude Include="gamestate.h" />
+    <ClInclude Include="gameutils.h" />
+    <ClInclude Include="image.h" />
     <ClInclude Include="inputhandler.h" />
+    <ClInclude Include="label.h" />
     <ClInclude Include="logmanager.h" />
+    <ClInclude Include="menu.h" />
+    <ClInclude Include="menustate.h" />
+    <ClInclude Include="resourcemanager.h" />
     <ClInclude Include="sprite.h" />
+    <ClInclude Include="state.h" />
+    <ClInclude Include="text.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="texturemanager.h" />
+    <ClInclude Include="uielement.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp" />
+    <ClCompile Include="button.cpp" />
     <ClCompile Include="entity.cpp" />
+    <ClCompile Include="fontmanager.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="gamemenustate.cpp" />
+    <ClCompile Include="gamestate.cpp" />
+    <ClCompile Include="gameutils.cpp" />
+    <ClCompile Include="image.cpp" />
     <ClCompile Include="inputhandler.cpp" />
+    <ClCompile Include="label.cpp" />
     <ClCompile Include="logmanager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="menu.cpp" />
+    <ClCompile Include="menustate.cpp" />
+    <ClCompile Include="resourcemanager.cpp" />
     <ClCompile Include="sprite.cpp" />
+    <ClCompile Include="state.cpp" />
+    <ClCompile Include="text.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="texturemanager.cpp" />
+    <ClCompile Include="uielement.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

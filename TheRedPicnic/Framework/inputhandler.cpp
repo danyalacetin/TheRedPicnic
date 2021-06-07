@@ -9,12 +9,18 @@
 
 // Library includes:
 #include <cassert>
-
-//
 #include <iostream>
+
 
 InputHandler::InputHandler()
 : m_pGameController(0)
+, m_KeyEnter(0)
+, m_KeyEsc(0)
+, m_KeyUp(0)
+, m_KeyDown(0)
+, m_KeyRight(0)
+, m_KeyLeft(0)
+, m_KeySpace(0)
 {
 
 }
@@ -44,7 +50,7 @@ InputHandler::ProcessInput(Game& game)
 	while (SDL_PollEvent(&event) != 0)
 	{
 		//Debug purpose quit
-		if (event.key.keysym.sym == SDLK_ESCAPE)
+		if (event.key.keysym.sym == SDLK_0)
 		{
 			game.Quit();
 		}

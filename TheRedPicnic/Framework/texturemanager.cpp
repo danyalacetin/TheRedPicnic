@@ -43,7 +43,7 @@ TextureManager::GetTexture(const char* pcFilename)
 	{
 		// Not already loaded... so load...
 		pTexture = new Texture();
-		if (!pTexture->Initialise(pcFilename, m_pRenderer))
+		if (!pTexture->InitialiseImage(pcFilename, m_pRenderer))
 		{
 			LogManager::GetInstance().Log("Texture failed to initialise!");
 		}

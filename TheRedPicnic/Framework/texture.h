@@ -4,6 +4,9 @@
 
 // Library includes:
 #include <SDL.h>
+#include <SDL_ttf.h>
+
+// Forward Declarations:
 
 class Texture
 {
@@ -12,12 +15,14 @@ public:
 	Texture();
 	~Texture();
 
-	bool Initialise(const char* pcFilename, SDL_Renderer* pRenderer);
+	bool InitialiseImage(const char* pcFilename, SDL_Renderer* pRenderer);
+	bool InitialiseFont(TTF_Font* pFont, const char* pcText, SDL_Renderer* pRenderer, SDL_Color* pColour);
 
 	int GetWidth() const;
 	int GetHeight() const;
 
 	SDL_Texture* GetTexture();
+	SDL_RendererFlip& GetFlip();
 
 protected:
 

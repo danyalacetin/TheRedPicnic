@@ -7,15 +7,21 @@
 #include "backbuffer.h"
 #include "inputhandler.h"
 #include "logmanager.h"
+#include "resourcemanager.h"
 #include "sprite.h"
+#include "menustate.h"
+#include "gamestate.h"
+#include "gamemenustate.h"
 
 // Library includes:
 #include <cassert>
 #include <SDL.h>
 #include <cstdio>
+#include <Windows.h>
 
 // Static Members:
 Game* Game::sm_pInstance = 0;
+Vector2f Game::screenDimensions = Vector2f();
 
 Game&
 Game::GetInstance()
@@ -39,7 +45,6 @@ Game::DestroyInstance()
 
 Game::Game()
 : m_pBackBuffer(0)
-, m_pInputHandler(0)
 , m_looping(true)
 , m_executionTime(0)
 , m_elapsedSeconds(0)
@@ -57,18 +62,51 @@ Game::~Game()
 	delete m_pBackBuffer;
 	m_pBackBuffer = 0;
 
-	delete m_pInputHandler;
-	m_pInputHandler = 0;
+	//----Delete-all-game-states----
+	while (!m_pGameStateStack.empty())
+	{
+		delete m_pGameStateStack.back();
+		m_pGameStateStack.pop_back();
+	}
 
-	//Delete Sprites
-	delete m_pTest;
+	//----Delete-Sprites----
+
+	// Main Menu
+	delete m_pTitleScreen;
+	m_pTitleScreen = 0;
+	delete m_pButton;
+	m_pButton = 0;
+
+	// Splash Screen
+	delete m_pFmod;
+
+	// Background
+	delete m_pBackground;
+	delete m_pMidGround;
+	delete m_pGround;
+
+	// Characters
+	delete m_pPlayer;
+	delete m_pBunny;
+	delete m_pSquirrel;
+
+	// Objects
+	delete m_pApple;
+	delete m_pChicken;
+	delete m_pMuffin;
+	delete m_pPie;
+
+	ResourceManager::DestroyInstance();
 }
 
 bool 
 Game::Initialise()
 {
-	const int width = 1920;
-	const int height = 1080;
+	HWND hd = GetDesktopWindow();
+	RECT rect;
+	GetClientRect(hd, &rect);
+	const int width = (rect.right - rect.left);
+	const int height = (rect.bottom - rect.top);
 
 	m_pBackBuffer = new BackBuffer();
 	if (!m_pBackBuffer->Initialise(width, height))
@@ -77,10 +115,9 @@ Game::Initialise()
 		return (false);
 	}
 
-	m_pInputHandler = new InputHandler();
-	if (!m_pInputHandler->Initialise())
+	if (!ResourceManager::Setup(m_pBackBuffer->GetRenderer()))
 	{
-		LogManager::GetInstance().Log("InputHandler Init Fail!");
+		LogManager::GetInstance().Log("ResourceManager Setup Failed");
 		return (false);
 	}
 
@@ -89,11 +126,14 @@ Game::Initialise()
 
 	m_pBackBuffer->SetClearColour(0xCC, 0xCC, 0xCC);
 
-	m_pTest = m_pBackBuffer->CreateSprite("assets/playership.png");
+	LoadSprites();
 
-	//Create the player instance.
+	screenDimensions.x = static_cast<float>(width);
+	screenDimensions.y = static_cast<float>(height);
 
-	//Intilise map.
+	m_pMenuState = new MenuState();
+	m_pMenuState->Initialise(m_pButton, m_pTitleScreen);
+	m_pGameStateStack.push_back(m_pMenuState);
 
 	return (true);
 }
@@ -102,10 +142,9 @@ bool
 Game::DoGameLoop()
 {
 	const float stepSize = 1.0f / 60.0f;
-
-	assert(m_pInputHandler);
-	m_pInputHandler->ProcessInput(*this);
 	
+	ResourceManager::GetInstance().GetInputHandler().ProcessInput(*this);
+
 	if (m_looping)
 	{
 		Uint64 current = SDL_GetPerformanceCounter();
@@ -158,18 +197,7 @@ Game::Process(float deltaTime)
 	}
 
 	// Update the game world simulation:
-
-	m_pTest->Process(deltaTime);
-	m_pInputHandler->GetKeyPressed(SDLK_UP);
-	
-
-	//Process each entity, partical and gui elements
-
-	//Update player
-
-	//Check collisions
-
-	//Remove any dead entities or particals from the container
+	m_pGameStateStack.back()->Process(deltaTime);
 }
 
 void 
@@ -179,9 +207,7 @@ Game::Draw(BackBuffer& backBuffer)
 
 	backBuffer.Clear();
 
-	m_pTest->Draw(backBuffer);
-
-	//Draw all Entities, particals and gui elements
+	m_pGameStateStack.back()->Draw(backBuffer);
 	
 	backBuffer.Present();
 }
@@ -190,4 +216,62 @@ void
 Game::Quit()
 {
 	m_looping = false;
+}
+
+bool Game::LoadSprites()
+{
+	// Main Menu
+	m_pTitleScreen = m_pBackBuffer->CreateSprite("assets/Title.png");
+	m_pButton = m_pBackBuffer->CreateSprite("assets/Button.png");
+
+	// Splash Screen
+	m_pFmod = m_pBackBuffer->CreateSprite("assets/Sound.png");
+
+	// Background
+	m_pBackground = m_pBackBuffer->CreateSprite("assets/Background.png");
+	m_pMidGround = m_pBackBuffer->CreateSprite("assets/Midground.png");
+	m_pGround = m_pBackBuffer->CreateSprite("assets/Ground.png");
+
+	// Characters
+	m_pPlayer = m_pBackBuffer->CreateSprite("assets/PlayerSpriteSheet.png");
+	m_pBunny = m_pBackBuffer->CreateSprite("assets/Bunny.png");
+	m_pSquirrel = m_pBackBuffer->CreateSprite("assets/Squirrel.png");
+
+	// Objects
+	m_pApple = m_pBackBuffer->CreateSprite("assets/FoodSpriteApple.png");
+	m_pChicken = m_pBackBuffer->CreateSprite("assets/FoodSpriteChicken.png");
+	m_pMuffin = m_pBackBuffer->CreateSprite("assets/FoodSpriteMuffin.png");
+	m_pPie = m_pBackBuffer->CreateSprite("assets/FoodSpritePieSlice.png");
+
+	return true;
+}
+
+State*
+Game::GetPreviousState()
+{
+	return m_pGameStateStack[m_pGameStateStack.size() - 2];
+}
+
+void
+Game::AddGameState()
+{
+	m_pGameState = new GameState();
+	m_pGameState->Initialise();
+	m_pGameStateStack.push_back(m_pGameState);
+}
+
+void
+Game::AddGameMenuState()
+{
+	m_pGameMenuState = new GameMenuState();
+	m_pGameMenuState->Initialise(m_pButton);
+	m_pGameStateStack.push_back(m_pGameMenuState);
+}
+
+void
+Game::DeleteState()
+{
+	delete m_pGameStateStack.back();
+	m_pGameStateStack.pop_back();
+	m_pGameStateStack.back()->SetInputWait(50);
 }

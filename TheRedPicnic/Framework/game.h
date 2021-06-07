@@ -2,10 +2,20 @@
 #ifndef __GAME_H__
 #define __GAME_H__
 
+// Local Includes:
+#include "gameutils.h"
+
+// Library Includes:
+#include <vector>
+
 // Forward Declarations
 class BackBuffer;
 class InputHandler;
 class Sprite;
+class GameState;
+class MenuState;
+class GameMenuState;
+class State;
 
 class Game
 {
@@ -19,6 +29,13 @@ public:
 	bool DoGameLoop();
 	void Quit();
 
+	bool LoadSprites();
+
+	State* GetPreviousState();
+	void AddGameState();
+	void AddGameMenuState();
+	void DeleteState();
+
 protected:
 	void Process(float deltaTime);
 	void Draw(BackBuffer& backBuffer);
@@ -31,11 +48,11 @@ private:
 
 	//Member Data:
 public:
+	static Vector2f screenDimensions;
 
 protected:
 	static Game* sm_pInstance;
 	BackBuffer* m_pBackBuffer;
-	InputHandler* m_pInputHandler;
 	bool m_looping;
 
 	// Simulation Counters:
@@ -47,9 +64,37 @@ protected:
 	int m_FPS;
 	int m_numUpdates;
 	bool m_drawDebugInfo;
+
+	// Game States:
+	std::vector<State*> m_pGameStateStack;
+	MenuState* m_pMenuState;
+	GameState* m_pGameState;
+	GameMenuState* m_pGameMenuState;
 	
-	// Game Entities:
-	Sprite* m_pTest;
+	//-----Sprites-----
+
+	// Main Menu
+	Sprite* m_pTitleScreen;
+	Sprite* m_pButton;
+
+	// Splash Screen
+	Sprite* m_pFmod;
+
+	// Background
+	Sprite* m_pBackground;
+	Sprite* m_pMidGround;
+	Sprite* m_pGround;
+
+	// Characters
+	Sprite* m_pPlayer;
+	Sprite* m_pBunny;
+	Sprite* m_pSquirrel;
+
+	// Objects
+	Sprite* m_pApple;
+	Sprite* m_pChicken;
+	Sprite* m_pMuffin;
+	Sprite* m_pPie;
 
 private:
 

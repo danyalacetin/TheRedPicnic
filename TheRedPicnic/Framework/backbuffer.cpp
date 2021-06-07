@@ -1,13 +1,13 @@
-// COMP710 GP 2D Framework 2019
-
 // This include:
 #include "backbuffer.h"
 
 // Local includes:
 #include "logmanager.h"
-#include "texturemanager.h"
 #include "sprite.h"
+#include "resourcemanager.h"
+#include "texturemanager.h"
 #include "texture.h"
+#include "text.h"
 
 // Library includes:
 #include <SDL.h>
@@ -15,23 +15,19 @@
 #include <cassert>
 
 BackBuffer::BackBuffer()
-: m_pTextureManager(0)
-, m_pWindow(0)
-, m_pRenderer(0)
-, m_width(0)
-, m_height(0)
-, m_clearRed(0)
-, m_clearGreen(0)
-, m_clearBlue(0)
+	: m_pWindow(0)
+	, m_pRenderer(0)
+	, m_width(0)
+	, m_height(0)
+	, m_clearRed(0)
+	, m_clearGreen(0)
+	, m_clearBlue(0)
 {
 
 }
 
 BackBuffer::~BackBuffer()
 {
-	delete m_pTextureManager;
-	m_pTextureManager = 0;
-
 	SDL_DestroyRenderer(m_pRenderer);
 	m_pRenderer = 0;
 
@@ -42,7 +38,7 @@ BackBuffer::~BackBuffer()
 	SDL_Quit();
 }
 
-bool 
+bool
 BackBuffer::Initialise(int width, int height)
 {
 	m_width = width;
@@ -56,7 +52,7 @@ BackBuffer::Initialise(int width, int height)
 	else
 	{
 		m_pWindow = SDL_CreateWindow("COMP710 2D Game Framework", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
-	
+
 		if (m_pWindow == 0)
 		{
 			LogSDLError();
@@ -64,7 +60,7 @@ BackBuffer::Initialise(int width, int height)
 		}
 		else
 		{
-			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC); 
+			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
 			if (m_pRenderer == 0)
 			{
@@ -87,19 +83,21 @@ BackBuffer::Initialise(int width, int height)
 	SetFullscreen(true);
 	SDL_Delay(1000);
 
-	m_pTextureManager = new TextureManager();
-	assert(m_pTextureManager);
-	m_pTextureManager->Initialise(m_pRenderer);
-
 	return (true);
 }
 
-void 
+SDL_Renderer*
+BackBuffer::GetRenderer()
+{
+	return (m_pRenderer);
+}
+
+void
 BackBuffer::SetFullscreen(bool fullscreen)
 {
 	if (fullscreen)
 	{
-//		SDL_SetWindowFullscreen(m_pWindow, SDL_WINDOW_FULLSCREEN | SDL_WINDOW_ALWAYS_ON_TOP);
+		//		SDL_SetWindowFullscreen(m_pWindow, SDL_WINDOW_FULLSCREEN | SDL_WINDOW_ALWAYS_ON_TOP);
 		SDL_SetWindowFullscreen(m_pWindow, SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_ALWAYS_ON_TOP);
 		SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
 		SDL_SetWindowSize(m_pWindow, m_width, m_height);
@@ -110,7 +108,7 @@ BackBuffer::SetFullscreen(bool fullscreen)
 	}
 }
 
-void 
+void
 BackBuffer::Clear()
 {
 	SDL_SetRenderDrawColor(m_pRenderer, m_clearRed, m_clearGreen, m_clearBlue, 0xff);
@@ -135,24 +133,30 @@ BackBuffer::SetDrawColour(unsigned char r, unsigned char g, unsigned char b, uns
 	SDL_SetRenderDrawColor(m_pRenderer, r, g, b, a);
 }
 
-void 
+void
 BackBuffer::DrawSprite(Sprite& sprite)
 {
 	SDL_Rect dest;
 
-	dest.x = sprite.GetX();
-	dest.y = sprite.GetY();
+	dest.x = sprite.GetX() - sprite.GetWidth() / 2;
+	dest.y = sprite.GetY() - sprite.GetHeight() / 2;
 	dest.w = sprite.GetWidth();
 	dest.h = sprite.GetHeight();
 
-	SDL_RenderCopy(m_pRenderer, sprite.GetTexture()->GetTexture(), 0, &dest);
+	SDL_SetTextureBlendMode(sprite.GetTexture()->GetTexture(), SDL_BLENDMODE_BLEND);
+	SDL_SetTextureAlphaMod(sprite.GetTexture()->GetTexture(), sprite.GetAlpha());
+
+	float fAngle = -sprite.GetAngle() * 180.0f / static_cast<float>(M_PI);
+
+	SDL_RenderCopyEx(m_pRenderer, sprite.GetTexture()->GetTexture(), nullptr, &dest,
+		fAngle, nullptr, sprite.GetTexture()->GetFlip());
 }
 
 void
 BackBuffer::DrawRectangle(int x1, int y1, int x2, int y2)
 {
 	SDL_Rect fillRect;
-	
+
 	fillRect.x = x1;
 	fillRect.y = y1;
 	fillRect.w = x2 - x1;
@@ -167,32 +171,61 @@ BackBuffer::DrawLine(int x1, int y1, int x2, int y2)
 	SDL_RenderDrawLine(m_pRenderer, x1, y1, x2, y2);
 }
 
-void 
+void
 BackBuffer::LogSDLError()
 {
 	LogManager::GetInstance().Log(SDL_GetError());
 }
 
-Sprite* 
+Sprite*
 BackBuffer::CreateSprite(const char* pcFilename)
 {
-	assert(m_pTextureManager);
-
-	Texture* pTexture = m_pTextureManager->GetTexture(pcFilename);
+	Texture* pTexture = ResourceManager::GetInstance().GetTextureManager().GetTexture(pcFilename);
 
 	Sprite* pSprite = new Sprite();
 	if (!pSprite->Initialise(*pTexture))
 	{
-		LogManager::GetInstance().Log("Sprite Failed to Create!");
+		LogManager::GetInstance().Log("Sprite Failed to Initialise!");
 	}
 
 	return (pSprite);
 }
 
-void 
+void
 BackBuffer::SetClearColour(unsigned char r, unsigned char g, unsigned char b)
 {
 	m_clearRed = r;
 	m_clearGreen = g;
 	m_clearBlue = b;
+}
+
+void
+BackBuffer::DrawText(Text* pText, int iX, int iY) // TODO change handles
+{
+	if (pText)
+	{
+		TextAlignment alignment = pText->GetAlignment();
+		Texture& pTexture = pText->GetTexture();
+		SDL_Rect dst;
+
+		switch (alignment)
+		{
+		case ALIGN_BOT_LEFT:
+			dst.x = iX;
+			dst.y = iY - pText->GetHeight();
+			dst.w = pText->GetWidth();
+			dst.h = pText->GetHeight();
+			break;
+		case ALIGN_CENTRE:
+			dst.x = iX - pText->GetWidth() / 2;
+			dst.y = iY - pText->GetHeight() / 2;
+			dst.w = pText->GetWidth();
+			dst.h = pText->GetHeight();
+			break;
+		default:
+			break;
+		}
+
+		SDL_RenderCopy(m_pRenderer, pTexture.GetTexture(), NULL, &dst);
+	}
 }

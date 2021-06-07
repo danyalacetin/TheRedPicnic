@@ -1,4 +1,3 @@
-// COMP710 GP 2D Framework 2019
 #ifndef __BACKBUFFER_H__
 #define __BACKBUFFER_H__
 
@@ -7,6 +6,7 @@ class TextureManager;
 class Sprite;
 struct SDL_Window;
 struct SDL_Renderer;
+class Text;
 
 class BackBuffer
 {
@@ -16,6 +16,7 @@ public:
 	~BackBuffer();
 
 	bool Initialise(int width, int height);
+	SDL_Renderer* GetRenderer();
 
 	void Clear();
 	void Present();
@@ -32,7 +33,9 @@ public:
 	void DrawLine(int x1, int y1, int x2, int y2);
 
 	Sprite* CreateSprite(const char* pcFilename);
-	
+
+	void DrawText(Text* pText, int x, int y);
+
 protected:
 	void LogSDLError();
 
@@ -44,8 +47,6 @@ private:
 public:
 
 protected:
-	TextureManager* m_pTextureManager;
-
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
 
@@ -55,7 +56,7 @@ protected:
 	unsigned char m_clearRed;
 	unsigned char m_clearGreen;
 	unsigned char m_clearBlue;
-	
+
 private:
 
 };
