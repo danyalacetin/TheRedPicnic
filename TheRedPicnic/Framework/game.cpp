@@ -12,6 +12,7 @@
 #include "menustate.h"
 #include "gamestate.h"
 #include "gamemenustate.h"
+#include "background.h"
 
 // Library includes:
 #include <cassert>
@@ -21,7 +22,7 @@
 
 // Static Members:
 Game* Game::sm_pInstance = 0;
-Vector2f Game::screenDimensions = Vector2f();
+Vector2f Game::m_screenDimensions = Vector2f();
 
 Game&
 Game::GetInstance()
@@ -62,6 +63,9 @@ Game::~Game()
 	delete m_pBackBuffer;
 	m_pBackBuffer = 0;
 
+	delete m_pBackground;
+	m_pBackground = 0;
+
 	//----Delete-all-game-states----
 	while (!m_pGameStateStack.empty())
 	{
@@ -69,32 +73,33 @@ Game::~Game()
 		m_pGameStateStack.pop_back();
 	}
 
+
 	//----Delete-Sprites----
 
 	// Main Menu
-	delete m_pTitleScreen;
-	m_pTitleScreen = 0;
-	delete m_pButton;
-	m_pButton = 0;
+	delete m_pTitleScreenSprite;
+	m_pTitleScreenSprite = 0;
+	delete m_pButtonSprite;
+	m_pButtonSprite = 0;
 
 	// Splash Screen
-	delete m_pFmod;
+	delete m_pFmodSprite;
 
 	// Background
-	delete m_pBackground;
-	delete m_pMidGround;
-	delete m_pGround;
+	delete m_pBackgroundSprite;
+	delete m_pMidGroundSprite;
+	delete m_pGroundSprite;
 
 	// Characters
-	delete m_pPlayer;
-	delete m_pBunny;
-	delete m_pSquirrel;
+	delete m_pPlayerSprite;
+	delete m_pBunnySprite;
+	delete m_pSquirrelSprite;
 
 	// Objects
-	delete m_pApple;
-	delete m_pChicken;
-	delete m_pMuffin;
-	delete m_pPie;
+	delete m_pAppleSprite;
+	delete m_pChickenSprite;
+	delete m_pMuffinSprite;
+	delete m_pPieSprite;
 
 	ResourceManager::DestroyInstance();
 }
@@ -128,11 +133,14 @@ Game::Initialise()
 
 	LoadSprites();
 
-	screenDimensions.x = static_cast<float>(width);
-	screenDimensions.y = static_cast<float>(height);
+	m_screenDimensions.x = static_cast<float>(width);
+	m_screenDimensions.y = static_cast<float>(height);
+
+	m_pBackground = new Background();
+	m_pBackground->Initialise(m_pBackgroundSprite, m_pMidGroundSprite, m_pGroundSprite);
 
 	m_pMenuState = new MenuState();
-	m_pMenuState->Initialise(m_pButton, m_pTitleScreen);
+	m_pMenuState->Initialise(m_pButtonSprite, m_pTitleScreenSprite);
 	m_pGameStateStack.push_back(m_pMenuState);
 
 	return (true);
@@ -207,6 +215,7 @@ Game::Draw(BackBuffer& backBuffer)
 
 	backBuffer.Clear();
 
+	m_pBackground->Draw(backBuffer);
 	m_pGameStateStack.back()->Draw(backBuffer);
 	
 	backBuffer.Present();
@@ -221,27 +230,27 @@ Game::Quit()
 bool Game::LoadSprites()
 {
 	// Main Menu
-	m_pTitleScreen = m_pBackBuffer->CreateSprite("assets/Title.png");
-	m_pButton = m_pBackBuffer->CreateSprite("assets/Button.png");
+	m_pTitleScreenSprite = m_pBackBuffer->CreateSprite("assets/Title.png");
+	m_pButtonSprite = m_pBackBuffer->CreateSprite("assets/Button.png");
 
 	// Splash Screen
-	m_pFmod = m_pBackBuffer->CreateSprite("assets/Sound.png");
+	m_pFmodSprite = m_pBackBuffer->CreateSprite("assets/Sound.png");
 
 	// Background
-	m_pBackground = m_pBackBuffer->CreateSprite("assets/Background.png");
-	m_pMidGround = m_pBackBuffer->CreateSprite("assets/Midground.png");
-	m_pGround = m_pBackBuffer->CreateSprite("assets/Ground.png");
+	m_pBackgroundSprite = m_pBackBuffer->CreateSprite("assets/Background.png");
+	m_pMidGroundSprite = m_pBackBuffer->CreateSprite("assets/Midground.png");
+	m_pGroundSprite = m_pBackBuffer->CreateSprite("assets/Ground.png");
 
 	// Characters
-	m_pPlayer = m_pBackBuffer->CreateSprite("assets/PlayerSpriteSheet.png");
-	m_pBunny = m_pBackBuffer->CreateSprite("assets/Bunny.png");
-	m_pSquirrel = m_pBackBuffer->CreateSprite("assets/Squirrel.png");
+	m_pPlayerSprite = m_pBackBuffer->CreateSprite("assets/PlayerSpriteSheet.png");
+	m_pBunnySprite = m_pBackBuffer->CreateSprite("assets/Bunny.png");
+	m_pSquirrelSprite = m_pBackBuffer->CreateSprite("assets/Squirrel.png");
 
 	// Objects
-	m_pApple = m_pBackBuffer->CreateSprite("assets/FoodSpriteApple.png");
-	m_pChicken = m_pBackBuffer->CreateSprite("assets/FoodSpriteChicken.png");
-	m_pMuffin = m_pBackBuffer->CreateSprite("assets/FoodSpriteMuffin.png");
-	m_pPie = m_pBackBuffer->CreateSprite("assets/FoodSpritePieSlice.png");
+	m_pAppleSprite = m_pBackBuffer->CreateSprite("assets/FoodSpriteApple.png");
+	m_pChickenSprite = m_pBackBuffer->CreateSprite("assets/FoodSpriteChicken.png");
+	m_pMuffinSprite = m_pBackBuffer->CreateSprite("assets/FoodSpriteMuffin.png");
+	m_pPieSprite = m_pBackBuffer->CreateSprite("assets/FoodSpritePieSlice.png");
 
 	return true;
 }
@@ -264,7 +273,7 @@ void
 Game::AddGameMenuState()
 {
 	m_pGameMenuState = new GameMenuState();
-	m_pGameMenuState->Initialise(m_pButton);
+	m_pGameMenuState->Initialise(m_pButtonSprite);
 	m_pGameStateStack.push_back(m_pGameMenuState);
 }
 

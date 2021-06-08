@@ -91,7 +91,7 @@ GameMenuState::CreateGameMenu()
 	m_pButton->SetOnPress([] { Game::GetInstance().Quit(); });
 	m_pGameMenu->AddButton(m_pButton);
 
-	m_pGameMenu->PositionElements(Game::screenDimensions);
+	m_pGameMenu->PositionElements(Game::m_screenDimensions);
 
 	m_menuStack.push(m_pGameMenu);
 }

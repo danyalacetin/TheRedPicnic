@@ -84,8 +84,8 @@ MenuState::CreateMainMenu()
 	m_pImage = new Image();
 	m_pImage->Initialise(m_pTitleScreen);
 	Vector2f vec;
-	vec.x = m_pImage->GetDimensions().x * 3;
-	vec.y = m_pImage->GetDimensions().y * 3;
+	vec.x = m_pImage->GetDimensions().x * 6;
+	vec.y = m_pImage->GetDimensions().y * 6;
 	m_pImage->SetDimensions(vec);
 	m_pMainMenu->AddChild(m_pImage);
 
@@ -110,7 +110,7 @@ MenuState::CreateMainMenu()
 	m_pButton->SetOnPress([] { Game::GetInstance().Quit(); });
 	m_pMainMenu->AddButton(m_pButton);
 
-	m_pMainMenu->PositionElements(Game::screenDimensions);
+	m_pMainMenu->PositionElements(Game::m_screenDimensions);
 
 	m_menuStack.push(m_pMainMenu);
 }
@@ -134,7 +134,7 @@ MenuState::CreateOptionsMenu()
 	m_pButton->SetOnPress([&] { MenuReturn(); });
 	m_pOptionsMenu->AddButton(m_pButton);
 
-	m_pOptionsMenu->PositionElements(Game::screenDimensions);
+	m_pOptionsMenu->PositionElements(Game::m_screenDimensions);
 
 	m_menuStack.push(m_pOptionsMenu);
 }
@@ -170,7 +170,7 @@ MenuState::CreateCreditsMenu()
 	m_pButton->SetOnPress([&] { MenuReturn(); });
 	m_pCreditsMenu->AddButton(m_pButton);
 
-	m_pCreditsMenu->PositionElements(Game::screenDimensions);
+	m_pCreditsMenu->PositionElements(Game::m_screenDimensions);
 
 	m_menuStack.push(m_pCreditsMenu);
 }

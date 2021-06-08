@@ -16,6 +16,7 @@ class GameState;
 class MenuState;
 class GameMenuState;
 class State;
+class Background;
 
 class Game
 {
@@ -48,7 +49,7 @@ private:
 
 	//Member Data:
 public:
-	static Vector2f screenDimensions;
+	static Vector2f m_screenDimensions;
 
 protected:
 	static Game* sm_pInstance;
@@ -71,30 +72,33 @@ protected:
 	GameState* m_pGameState;
 	GameMenuState* m_pGameMenuState;
 	
+	// Background
+	Background* m_pBackground;
+
 	//-----Sprites-----
 
 	// Main Menu
-	Sprite* m_pTitleScreen;
-	Sprite* m_pButton;
+	Sprite* m_pTitleScreenSprite;
+	Sprite* m_pButtonSprite;
 
 	// Splash Screen
-	Sprite* m_pFmod;
+	Sprite* m_pFmodSprite;
 
 	// Background
-	Sprite* m_pBackground;
-	Sprite* m_pMidGround;
-	Sprite* m_pGround;
+	Sprite* m_pBackgroundSprite;
+	Sprite* m_pMidGroundSprite;
+	Sprite* m_pGroundSprite;
 
 	// Characters
-	Sprite* m_pPlayer;
-	Sprite* m_pBunny;
-	Sprite* m_pSquirrel;
+	Sprite* m_pPlayerSprite;
+	Sprite* m_pBunnySprite;
+	Sprite* m_pSquirrelSprite;
 
 	// Objects
-	Sprite* m_pApple;
-	Sprite* m_pChicken;
-	Sprite* m_pMuffin;
-	Sprite* m_pPie;
+	Sprite* m_pAppleSprite;
+	Sprite* m_pChickenSprite;
+	Sprite* m_pMuffinSprite;
+	Sprite* m_pPieSprite;
 
 private:
 
