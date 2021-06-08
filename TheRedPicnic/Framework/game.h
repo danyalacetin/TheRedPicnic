@@ -12,6 +12,7 @@
 class BackBuffer;
 class InputHandler;
 class Sprite;
+class AnimatedSprite;
 class GameState;
 class MenuState;
 class GameMenuState;
@@ -50,6 +51,7 @@ private:
 	//Member Data:
 public:
 	static Vector2f m_screenDimensions;
+	static float m_screenScaleRatio;
 
 protected:
 	static Game* sm_pInstance;

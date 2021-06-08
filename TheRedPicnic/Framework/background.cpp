@@ -41,7 +41,7 @@ Background::Initialise(Sprite* backgroundSprite, Sprite* midgroundSprite, Sprite
 
 	Vector2f screen = Game::m_screenDimensions;
 
-	//screen height / sprite height = ratio
+	//screen height / background sprite height = ratio
 	//Times both exsiting height and width to scale with screen resolution
 
 	m_pBackgroundSprite->SetWidth(m_pBackgroundSprite->GetDimensions().x * (screen.y / m_pBackgroundSprite->GetDimensions().y));

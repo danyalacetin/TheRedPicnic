@@ -9,6 +9,7 @@
 #include "logmanager.h"
 #include "resourcemanager.h"
 #include "sprite.h"
+#include "animatedsprite.h"
 #include "menustate.h"
 #include "gamestate.h"
 #include "gamemenustate.h"
@@ -23,6 +24,7 @@
 // Static Members:
 Game* Game::sm_pInstance = 0;
 Vector2f Game::m_screenDimensions = Vector2f();
+float Game::m_screenScaleRatio = 0;
 
 Game&
 Game::GetInstance()
@@ -131,10 +133,13 @@ Game::Initialise()
 
 	m_pBackBuffer->SetClearColour(0xCC, 0xCC, 0xCC);
 
-	LoadSprites();
-
 	m_screenDimensions.x = static_cast<float>(width);
 	m_screenDimensions.y = static_cast<float>(height);
+
+	//screen height / background sprite height = ratio
+	m_screenScaleRatio = m_screenDimensions.y / 240;
+
+	LoadSprites();
 
 	m_pBackground = new Background();
 	m_pBackground->Initialise(m_pBackgroundSprite, m_pMidGroundSprite, m_pGroundSprite);

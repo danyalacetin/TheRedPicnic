@@ -129,6 +129,9 @@
     <ClInclude Include="background.h">
       <Filter>Header Files\Entity Objects</Filter>
     </ClInclude>
+    <ClInclude Include="animatedsprite.h">
+      <Filter>Header Files\SDL Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp">
@@ -199,6 +202,9 @@
     </ClCompile>
     <ClCompile Include="background.cpp">
       <Filter>Source Files\Entity Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="animatedsprite.cpp">
+      <Filter>Source Files\SDL Render</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

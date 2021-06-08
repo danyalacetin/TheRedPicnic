@@ -4,6 +4,7 @@
 // Local includes:
 #include "logmanager.h"
 #include "sprite.h"
+#include "animatedsprite.h"
 #include "resourcemanager.h"
 #include "texturemanager.h"
 #include "texture.h"
@@ -150,6 +151,32 @@ BackBuffer::DrawSprite(Sprite& sprite)
 
 	SDL_RenderCopyEx(m_pRenderer, sprite.GetTexture()->GetTexture(), nullptr, &dest,
 		fAngle, nullptr, sprite.GetTexture()->GetFlip());
+}
+
+void
+BackBuffer::DrawAnimatedSprite(AnimatedSprite& animatedSprite)
+{
+	SDL_Rect dest;
+	SDL_Rect source;
+
+	dest.x = animatedSprite.GetSprite()->GetX();
+	dest.y = animatedSprite.GetSprite()->GetY();
+	dest.w = animatedSprite.GetWidth();
+	dest.h = animatedSprite.GetHeight();
+
+	source.x = animatedSprite.GetFrameX();
+	source.y = animatedSprite.GetFrameY();
+	source.w = animatedSprite.GetFrameWidth();
+	source.h = animatedSprite.GetFrameHeight();
+
+	if (animatedSprite.GetFlipped()) {
+		m_flip = SDL_FLIP_HORIZONTAL;
+	}
+	else {
+		m_flip = SDL_FLIP_NONE;
+	}
+
+	SDL_RenderCopyEx(m_pRenderer, animatedSprite.GetSprite()->GetTexture()->GetTexture(), &source, &dest, animatedSprite.GetSprite()->GetAngle(), NULL, m_flip);
 }
 
 void

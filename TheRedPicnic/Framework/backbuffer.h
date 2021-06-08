@@ -2,11 +2,15 @@
 #define __BACKBUFFER_H__
 
 // Forward Declarations:
+#include <SDL.h>
+
 class TextureManager;
 class Sprite;
+class AnimatedSprite;
 struct SDL_Window;
 struct SDL_Renderer;
 class Text;
+
 
 class BackBuffer
 {
@@ -29,6 +33,7 @@ public:
 	void SetDrawColour(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 
 	void DrawSprite(Sprite& sprite);
+	void DrawAnimatedSprite(AnimatedSprite& sprite);
 	void DrawRectangle(int x1, int y1, int x2, int y2);
 	void DrawLine(int x1, int y1, int x2, int y2);
 
@@ -52,6 +57,8 @@ protected:
 
 	int m_width;
 	int m_height;
+
+	SDL_RendererFlip m_flip;
 
 	unsigned char m_clearRed;
 	unsigned char m_clearGreen;
