@@ -132,6 +132,15 @@
     <ClInclude Include="animatedsprite.h">
       <Filter>Header Files\SDL Render</Filter>
     </ClInclude>
+    <ClInclude Include="character.h">
+      <Filter>Header Files\Entity Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="playablecharacter.h">
+      <Filter>Header Files\Entity Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="spritemanager.h">
+      <Filter>Header Files\Resource Management</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp">
@@ -205,6 +214,15 @@
     </ClCompile>
     <ClCompile Include="animatedsprite.cpp">
       <Filter>Source Files\SDL Render</Filter>
+    </ClCompile>
+    <ClCompile Include="character.cpp">
+      <Filter>Source Files\Entity Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="playablecharacter.cpp">
+      <Filter>Source Files\Entity Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="spritemanager.cpp">
+      <Filter>Source Files\Resource Management</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

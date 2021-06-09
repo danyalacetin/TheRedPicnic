@@ -55,6 +55,7 @@ protected:
 	float m_velocityX;
 	float m_velocityY;
 
+	bool m_grounded;
 	bool m_dead;
 
 private:

@@ -31,8 +31,6 @@ public:
 	bool DoGameLoop();
 	void Quit();
 
-	bool LoadSprites();
-
 	State* GetPreviousState();
 	void AddGameState();
 	void AddGameMenuState();
@@ -52,6 +50,7 @@ private:
 public:
 	static Vector2f m_screenDimensions;
 	static float m_screenScaleRatio;
+	static float m_ground;
 
 protected:
 	static Game* sm_pInstance;
@@ -68,6 +67,8 @@ protected:
 	int m_numUpdates;
 	bool m_drawDebugInfo;
 
+
+
 	// Game States:
 	std::vector<State*> m_pGameStateStack;
 	MenuState* m_pMenuState;
@@ -76,31 +77,6 @@ protected:
 	
 	// Background
 	Background* m_pBackground;
-
-	//-----Sprites-----
-
-	// Main Menu
-	Sprite* m_pTitleScreenSprite;
-	Sprite* m_pButtonSprite;
-
-	// Splash Screen
-	Sprite* m_pFmodSprite;
-
-	// Background
-	Sprite* m_pBackgroundSprite;
-	Sprite* m_pMidGroundSprite;
-	Sprite* m_pGroundSprite;
-
-	// Characters
-	Sprite* m_pPlayerSprite;
-	Sprite* m_pBunnySprite;
-	Sprite* m_pSquirrelSprite;
-
-	// Objects
-	Sprite* m_pAppleSprite;
-	Sprite* m_pChickenSprite;
-	Sprite* m_pMuffinSprite;
-	Sprite* m_pPieSprite;
 
 private:
 

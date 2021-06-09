@@ -8,6 +8,7 @@
 #include <stack> 
 
 class BackBuffer;
+class PlayableCharacter;
 
 class GameState : public State
 {
@@ -29,6 +30,7 @@ private:
 public:
 
 protected:
+	PlayableCharacter* m_pPlayer;
 
 private:
 

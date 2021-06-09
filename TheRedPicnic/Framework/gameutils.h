@@ -35,4 +35,21 @@ enum TextAlignment
 	ALIGN_CENTRE,
 };
 
+enum SpriteCode 
+{
+	TITLE,
+	BUTTON,
+	FMOD,
+	BACKGROUND,
+	MIDGROUND,
+	GROUND,
+	PLAYER,
+	BUNNY,
+	SQUIRREL,
+	APPLE,
+	CHICKEN,
+	MUFFIN,
+	PIE
+};
+
 #endif //!__GAMEUTILS_H__

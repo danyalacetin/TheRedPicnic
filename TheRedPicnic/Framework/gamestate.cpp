@@ -6,6 +6,7 @@
 #include "state.h"
 #include "resourcemanager.h"
 #include "inputhandler.h"
+#include "playablecharacter.h"
 
 // Library includes:
 #include <cassert>
@@ -23,6 +24,11 @@ bool
 GameState::Initialise()
 {
 	SetInputWait(50);
+
+	//m_pPlayer = new PlayableCharacter();
+	//m_pPlayer->Initialise(Game::GetInstance().);
+	//m_pPlayer->SetPosition(200, 500);
+
 	return (true);
 }
 

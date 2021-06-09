@@ -8,6 +8,7 @@
 #include "inputhandler.h"
 #include "logmanager.h"
 #include "resourcemanager.h"
+#include "spritemanager.h"
 #include "sprite.h"
 #include "animatedsprite.h"
 #include "menustate.h"
@@ -25,6 +26,7 @@
 Game* Game::sm_pInstance = 0;
 Vector2f Game::m_screenDimensions = Vector2f();
 float Game::m_screenScaleRatio = 0;
+float Game::m_ground = 0;
 
 Game&
 Game::GetInstance()
@@ -75,34 +77,6 @@ Game::~Game()
 		m_pGameStateStack.pop_back();
 	}
 
-
-	//----Delete-Sprites----
-
-	// Main Menu
-	delete m_pTitleScreenSprite;
-	m_pTitleScreenSprite = 0;
-	delete m_pButtonSprite;
-	m_pButtonSprite = 0;
-
-	// Splash Screen
-	delete m_pFmodSprite;
-
-	// Background
-	delete m_pBackgroundSprite;
-	delete m_pMidGroundSprite;
-	delete m_pGroundSprite;
-
-	// Characters
-	delete m_pPlayerSprite;
-	delete m_pBunnySprite;
-	delete m_pSquirrelSprite;
-
-	// Objects
-	delete m_pAppleSprite;
-	delete m_pChickenSprite;
-	delete m_pMuffinSprite;
-	delete m_pPieSprite;
-
 	ResourceManager::DestroyInstance();
 }
 
@@ -139,13 +113,19 @@ Game::Initialise()
 	//screen height / background sprite height = ratio
 	m_screenScaleRatio = m_screenDimensions.y / 240;
 
-	LoadSprites();
+	m_ground = 500;
+
+	ResourceManager::GetInstance().GetSpriteManager().LoadSprites(*m_pBackBuffer);
 
 	m_pBackground = new Background();
-	m_pBackground->Initialise(m_pBackgroundSprite, m_pMidGroundSprite, m_pGroundSprite);
+	m_pBackground->Initialise(ResourceManager::GetInstance().GetSpriteManager().GetSprite(BACKGROUND),
+							  ResourceManager::GetInstance().GetSpriteManager().GetSprite(MIDGROUND), 
+							  ResourceManager::GetInstance().GetSpriteManager().GetSprite(GROUND));
 
 	m_pMenuState = new MenuState();
-	m_pMenuState->Initialise(m_pButtonSprite, m_pTitleScreenSprite);
+	m_pMenuState->Initialise(ResourceManager::GetInstance().GetSpriteManager().GetSprite(BUTTON),
+							 ResourceManager::GetInstance().GetSpriteManager().GetSprite(TITLE));
+
 	m_pGameStateStack.push_back(m_pMenuState);
 
 	return (true);
@@ -232,34 +212,6 @@ Game::Quit()
 	m_looping = false;
 }
 
-bool Game::LoadSprites()
-{
-	// Main Menu
-	m_pTitleScreenSprite = m_pBackBuffer->CreateSprite("assets/Title.png");
-	m_pButtonSprite = m_pBackBuffer->CreateSprite("assets/Button.png");
-
-	// Splash Screen
-	m_pFmodSprite = m_pBackBuffer->CreateSprite("assets/Sound.png");
-
-	// Background
-	m_pBackgroundSprite = m_pBackBuffer->CreateSprite("assets/Background.png");
-	m_pMidGroundSprite = m_pBackBuffer->CreateSprite("assets/Midground.png");
-	m_pGroundSprite = m_pBackBuffer->CreateSprite("assets/Ground.png");
-
-	// Characters
-	m_pPlayerSprite = m_pBackBuffer->CreateSprite("assets/PlayerSpriteSheet.png");
-	m_pBunnySprite = m_pBackBuffer->CreateSprite("assets/Bunny.png");
-	m_pSquirrelSprite = m_pBackBuffer->CreateSprite("assets/Squirrel.png");
-
-	// Objects
-	m_pAppleSprite = m_pBackBuffer->CreateSprite("assets/FoodSpriteApple.png");
-	m_pChickenSprite = m_pBackBuffer->CreateSprite("assets/FoodSpriteChicken.png");
-	m_pMuffinSprite = m_pBackBuffer->CreateSprite("assets/FoodSpriteMuffin.png");
-	m_pPieSprite = m_pBackBuffer->CreateSprite("assets/FoodSpritePieSlice.png");
-
-	return true;
-}
-
 State*
 Game::GetPreviousState()
 {
@@ -278,7 +230,7 @@ void
 Game::AddGameMenuState()
 {
 	m_pGameMenuState = new GameMenuState();
-	m_pGameMenuState->Initialise(m_pButtonSprite);
+	m_pGameMenuState->Initialise(ResourceManager::GetInstance().GetSpriteManager().GetSprite(BUTTON));
 	m_pGameStateStack.push_back(m_pGameMenuState);
 }
 

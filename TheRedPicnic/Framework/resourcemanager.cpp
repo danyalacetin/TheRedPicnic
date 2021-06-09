@@ -6,6 +6,7 @@
 #include "fontmanager.h"
 #include "logmanager.h"
 #include "inputhandler.h"
+#include "spritemanager.h"
 
 // Library includes:
 
@@ -30,6 +31,9 @@ ResourceManager::~ResourceManager()
 
 	delete m_pInputHandler;
 	m_pInputHandler = nullptr;
+
+	delete m_pSpriteManager;
+	m_pSpriteManager = nullptr;
 }
 
 bool ResourceManager::Initialise(SDL_Renderer* pRenderer)
@@ -41,6 +45,7 @@ bool ResourceManager::Initialise(SDL_Renderer* pRenderer)
 
 	m_pFontManager = new FontManager(pRenderer);
 	m_pInputHandler = new InputHandler();
+	m_pSpriteManager = new SpriteManager();
 
 	m_bIsInitialised = true;
 
@@ -151,4 +156,27 @@ InputHandler& ResourceManager::GetInputHandler()
 	}
 
 	return (*pInputHandler);
+}
+
+SpriteManager& ResourceManager::GetSpriteManager()
+{
+	SpriteManager* pSpriteManager = 0;
+
+	if (m_bIsInitialised)
+	{
+		if (m_pTextureManager)
+		{
+			pSpriteManager = m_pSpriteManager;
+		}
+		else
+		{
+			LogManager::GetInstance().Log("Sprite Manager is null");
+		}
+	}
+	else
+	{
+		LogManager::GetInstance().Log("Attempting to get Sprite Manager before ResourceManager is initialised");
+	}
+
+	return (*pSpriteManager);
 }

@@ -12,6 +12,7 @@ class IniManager;
 struct SDL_Renderer;
 class FontManager;
 class InputHandler;
+class SpriteManager;
 
 class ResourceManager
 {
@@ -26,6 +27,7 @@ public:
 	FontManager& GetFontManager();
 	TextureManager& GetTextureManager();
 	InputHandler& GetInputHandler();
+	SpriteManager& GetSpriteManager();
 
 protected:
 	bool Initialise(SDL_Renderer* pRenderer);
@@ -45,6 +47,7 @@ protected:
 	TextureManager* m_pTextureManager;
 	FontManager* m_pFontManager;
 	InputHandler* m_pInputHandler;
+	SpriteManager* m_pSpriteManager;
 
 	bool m_bIsInitialised;
 
