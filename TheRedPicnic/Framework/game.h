@@ -35,6 +35,7 @@ public:
 	void AddGameState();
 	void AddGameMenuState();
 	void DeleteState();
+	Background* GetBackground();
 
 protected:
 	void Process(float deltaTime);

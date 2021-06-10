@@ -42,9 +42,9 @@ protected:
 	Sprite* m_pMidgroundSprite;
 	Sprite* m_pGroundSprite;
 
-	int m_backgroundX[3];
-	int m_midgroundX[3];
-	int m_groundX[3];
+	float m_backgroundX[3];
+	float m_midgroundX[3];
+	float m_groundX[3];
 
 	float m_cameraVelocity;
 

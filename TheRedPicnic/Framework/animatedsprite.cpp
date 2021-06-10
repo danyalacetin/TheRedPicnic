@@ -9,7 +9,7 @@
 #include "backbuffer.h"
 
 AnimatedSprite::AnimatedSprite()
-	: m_frameSpeed(0.1)
+	: m_frameSpeed(0.2)
 	, m_timeElapsed(0)
 	, m_frameWidth(0)
 	, m_frameHeight(0)
@@ -54,7 +54,7 @@ AnimatedSprite::Process(float deltaTime)
 			{
 				m_frameX += m_frameWidth;
 
-				if (m_frameX >= m_sprite->GetWidth() / (Game::m_screenScaleRatio + 0.5))
+				if (m_frameX >= m_sprite->GetWidth())
 				{
 					m_frameX = 0;
 

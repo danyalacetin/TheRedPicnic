@@ -105,7 +105,7 @@ Game::Initialise()
 	m_lastTime = SDL_GetPerformanceCounter();
 	m_lag = 0.0f;
 
-	m_pBackBuffer->SetClearColour(0xCC, 0xCC, 0xCC);
+	m_pBackBuffer->SetClearColour(0xCC, 0xCC, 0xFF);
 
 	m_screenDimensions.x = static_cast<float>(width);
 	m_screenDimensions.y = static_cast<float>(height);
@@ -175,7 +175,7 @@ Game::DoGameLoop()
 	return (m_looping);
 }
 
-void 
+void
 Game::Process(float deltaTime)
 {
 	// Count total simulation time elapsed:
@@ -190,6 +190,7 @@ Game::Process(float deltaTime)
 	}
 
 	// Update the game world simulation:
+	m_pBackground->Process(deltaTime);
 	m_pGameStateStack.back()->Process(deltaTime);
 }
 
@@ -240,4 +241,10 @@ Game::DeleteState()
 	delete m_pGameStateStack.back();
 	m_pGameStateStack.pop_back();
 	m_pGameStateStack.back()->SetInputWait(50);
+}
+
+Background*
+Game::GetBackground()
+{
+	return m_pBackground;
 }

@@ -32,12 +32,18 @@ Background::Initialise(Sprite* backgroundSprite, Sprite* midgroundSprite, Sprite
 	m_pMidgroundSprite = midgroundSprite;
 	m_pGroundSprite = groundSprite;
 
+	m_cameraVelocity = 0;
+
 	for (int i = 0; i < 3; i++)
 	{
 		m_backgroundX[i] = 0;
 		m_midgroundX[i] = 0;
 		m_groundX[i] = 0;
 	}
+
+	m_backgroundX[0] = 0;
+	m_midgroundX[0] = 0;
+	m_groundX[0] = 0;
 
 	Vector2f screen = Game::m_screenDimensions;
 
@@ -64,6 +70,7 @@ Background::Initialise(Sprite* backgroundSprite, Sprite* midgroundSprite, Sprite
 void
 Background::Process(float deltaTime)
 {
+	
 	if (m_groundX[0] <= -m_pGroundSprite->GetWidth())
 	{
 		m_groundX[0] = 0;

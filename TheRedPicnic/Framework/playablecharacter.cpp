@@ -6,13 +6,15 @@
 #include "animatedsprite.h"
 #include "backbuffer.h"
 #include "character.h"
+#include "game.h"
+#include "background.h"
 
 // Library includes:
 #include <cassert>
 
 PlayableCharacter::PlayableCharacter()
 	: Character()
-	, m_borderMax(600)
+	, m_borderMax(1000)
 	, m_borderMin(100)
 {
 
@@ -21,8 +23,7 @@ PlayableCharacter::PlayableCharacter()
 void
 PlayableCharacter::Process(float deltaTime)
 {
-
-	if (!m_grounded)
+	if (/*!m_grounded*/false)
 	{	//Pause Animation, Set Jumping SpriteSheet
 		m_pSprite->SetPause(true);
 		m_pSprite->SetFrameY(m_pSprite->GetFrameHeight());
@@ -56,17 +57,24 @@ PlayableCharacter::Process(float deltaTime)
 		}
 	}
 
+	m_x += m_velocityX * deltaTime;
+
 	if (m_x > m_borderMax)
 	{
 		m_x = m_borderMax;
+		Game::GetInstance().GetBackground()->SetCameraVelocity(-m_velocityX);
 	}
 	else if (m_x < m_borderMin)
 	{
 		m_x = m_borderMin;
+		Game::GetInstance().GetBackground()->SetCameraVelocity(-m_velocityX);
+	}
+	else
+	{
+		Game::GetInstance().GetBackground()->SetCameraVelocity(0);
 	}
 
 	ProcessFlip();
-	Process(deltaTime);
 	m_pSprite->Process(deltaTime);
 }
 
