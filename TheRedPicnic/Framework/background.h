@@ -1,4 +1,3 @@
-// COMP710 GP 2D Framework 2019
 #ifndef __BACKGROUND_H__
 #define __BACKGROUND_H__
 

@@ -1,7 +1,7 @@
 #ifndef __STATE_H__
 #define __STATE_H__
 
-
+#include "gameutils.h"
 class BackBuffer;
 
 class State
@@ -18,6 +18,7 @@ public:
 
 	virtual int GetInputWait();
 	virtual void SetInputWait(int i);
+	virtual StateType GetStateType();
 
 protected:
 
@@ -27,6 +28,7 @@ private:
 public:
 
 protected:
+	StateType m_type;
 
 private:
 	int m_inputwait;

@@ -32,11 +32,6 @@ Character::Initialise(Sprite* sprite)
 	m_pSprite->SetFrameX(0);
 	m_pSprite->SetFrameY(0);
 
-	//SetWidth(m_pSprite->GetFrameWidth() * m_pSprite->GetSprite()->GetRatio());
-	//SetHeight(m_pSprite->GetFrameHeight() * m_pSprite->GetSprite()->GetRatio());
-
-	//m_ground = 210 * m_pSprite->GetSprite()->GetRatio();
-
 	m_pSprite->SetLooping(true);
 
 	return (true);

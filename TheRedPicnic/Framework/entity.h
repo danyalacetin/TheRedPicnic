@@ -1,4 +1,3 @@
-// COMP710 GP 2D Framework 2019
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
@@ -36,6 +35,8 @@ public:
 
 	float GetVerticalVelocity() const;
 	void SetVerticalVelocity(float y);
+
+	bool IsGrounded();
 
 protected:
 

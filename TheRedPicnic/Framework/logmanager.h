@@ -1,4 +1,3 @@
-// COMP710 GP 2D Framework 2019
 #ifndef __LOGMANAGER_H__
 #define __LOGMANAGER_H__
 

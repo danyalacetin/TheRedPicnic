@@ -11,11 +11,10 @@ public:
 	PlayableCharacter();
 
 	void Process(float deltaTime);
-
-	bool GetDoubleJump();
+	void ProcessAnimation(float deltaTime);
+	void ProcessMovement(float deltaTime);
 	void SetDoubleJump(bool b);
-	int GetBorderMin();
-	int GetBorderMax();
+	bool GetDoubleJump();
 
 protected:
 
@@ -27,9 +26,7 @@ public:
 
 
 protected:
-	int m_borderMin;
-	int m_borderMax;
-	bool m_doubleJump;
+	bool m_candoubleJump;
 
 private:
 

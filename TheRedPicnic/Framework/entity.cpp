@@ -1,5 +1,3 @@
-// COMP710 GP 2D Framework 2019
-
 // This include:
 #include "entity.h"
 
@@ -118,4 +116,10 @@ void
 Entity::SetVerticalVelocity(float y)
 {
 	m_velocityY = y;
+}
+
+bool
+Entity::IsGrounded()
+{
+	return m_grounded;
 }

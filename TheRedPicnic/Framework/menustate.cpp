@@ -37,6 +37,8 @@ MenuState::~MenuState()
 bool
 MenuState::Initialise(Sprite* pButton, Sprite* pTitleScreen)
 {
+	m_type = MainMenu;
+
 	m_pButtonSprite = pButton;
 	m_pTitleScreen = pTitleScreen;
 

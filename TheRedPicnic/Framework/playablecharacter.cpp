@@ -8,14 +8,15 @@
 #include "character.h"
 #include "game.h"
 #include "background.h"
+#include "gamestate.h"
+#include "logmanager.h"
 
 // Library includes:
 #include <cassert>
 
 PlayableCharacter::PlayableCharacter()
-	: Character()
-	, m_borderMax(1000)
-	, m_borderMin(100)
+	: Character(),
+	m_candoubleJump(false)
 {
 
 }
@@ -23,7 +24,16 @@ PlayableCharacter::PlayableCharacter()
 void
 PlayableCharacter::Process(float deltaTime)
 {
-	if (/*!m_grounded*/false)
+	ProcessAnimation(deltaTime);
+	ProcessMovement(deltaTime);
+	ProcessFlip();
+	m_pSprite->Process(deltaTime);
+}
+
+void
+PlayableCharacter::ProcessAnimation(float deltaTime)
+{
+	if (!m_grounded)
 	{	//Pause Animation, Set Jumping SpriteSheet
 		m_pSprite->SetPause(true);
 		m_pSprite->SetFrameY(m_pSprite->GetFrameHeight());
@@ -43,7 +53,8 @@ PlayableCharacter::Process(float deltaTime)
 	}
 	else
 	{
-		m_doubleJump = true;
+		m_candoubleJump = true;
+
 		if (m_velocityX != 0)
 		{	//Animate Walking
 			m_pSprite->SetFrameY(0);
@@ -56,17 +67,25 @@ PlayableCharacter::Process(float deltaTime)
 			m_pSprite->SetFrameY(m_pSprite->GetFrameHeight());
 		}
 	}
+}
 
+//--------------MOVE-MOVEMENT-TO-ENTITY-CLASS------------------
+
+void
+PlayableCharacter::ProcessMovement(float deltaTime)
+{
+
+	// X movement
 	m_x += m_velocityX * deltaTime;
 
-	if (m_x > m_borderMax)
+	if (m_x > GameState::m_playerBoundaryMax)
 	{
-		m_x = m_borderMax;
+		m_x = GameState::m_playerBoundaryMax;
 		Game::GetInstance().GetBackground()->SetCameraVelocity(-m_velocityX);
 	}
-	else if (m_x < m_borderMin)
+	else if (m_x < GameState::m_playerBoundaryMin)
 	{
-		m_x = m_borderMin;
+		m_x = GameState::m_playerBoundaryMin;
 		Game::GetInstance().GetBackground()->SetCameraVelocity(-m_velocityX);
 	}
 	else
@@ -74,31 +93,35 @@ PlayableCharacter::Process(float deltaTime)
 		Game::GetInstance().GetBackground()->SetCameraVelocity(0);
 	}
 
-	ProcessFlip();
-	m_pSprite->Process(deltaTime);
+	//Y movement
+	m_y += m_velocityY * deltaTime;
+
+	if (m_y >= GameState::m_ground)
+	{
+		m_y = GameState::m_ground;
+		m_velocityY = 0;
+		m_grounded = true;
+		m_candoubleJump = false;
+	}
+	else
+	{
+		m_velocityY += (GameState::m_gravity) * deltaTime * Game::m_screenScaleRatio / 6;
+		m_grounded = false;
+	}
 }
+
+//---------------------------------------------------------------
 
 
 bool
 PlayableCharacter::GetDoubleJump()
 {
-	return m_doubleJump;
+	return m_candoubleJump;
 }
 
 void
 PlayableCharacter::SetDoubleJump(bool b)
 {
-	m_doubleJump = b;
+	m_candoubleJump = b;
 }
 
-int
-PlayableCharacter::GetBorderMax()
-{
-	return m_borderMax;
-}
-
-int
-PlayableCharacter::GetBorderMin()
-{
-	return m_borderMin;
-}

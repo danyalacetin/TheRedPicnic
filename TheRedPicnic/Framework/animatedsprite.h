@@ -1,5 +1,3 @@
-// COMP710 GP 2D Framework 2019
-
 #ifndef __ANIMATEDSPRITE_H__
 #define __ANIMATEDSPRITE_H__
 

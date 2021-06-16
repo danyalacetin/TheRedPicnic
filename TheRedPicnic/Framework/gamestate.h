@@ -28,6 +28,10 @@ private:
 
 	//Member Data:
 public:
+	static int m_ground;
+	static float m_gravity;
+	static float m_playerBoundaryMin;
+	static float m_playerBoundaryMax;
 
 protected:
 	PlayableCharacter* m_pPlayer;

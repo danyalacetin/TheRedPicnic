@@ -2,6 +2,7 @@
 #include "state.h"
 
 // Local includes:
+#include "gameutils.h"
 
 // Library includes:
 #include <cassert>
@@ -30,6 +31,7 @@ State::Draw(BackBuffer& backBuffer)
 {
 }
 
+
 void
 State::ProcessInputWait()
 {
@@ -49,4 +51,11 @@ void
 State::SetInputWait(int i)
 {
 	m_inputwait = i;
+}
+
+
+StateType
+State::GetStateType()
+{
+	return m_type;
 }

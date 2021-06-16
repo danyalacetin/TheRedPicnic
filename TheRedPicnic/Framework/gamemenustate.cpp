@@ -28,6 +28,8 @@ GameMenuState::~GameMenuState()
 bool
 GameMenuState::Initialise(Sprite* pButton)
 {
+	m_type = InGameMenu;
+
 	m_pButtonSprite = pButton;
 	CreateGameMenu();
 	return (true);

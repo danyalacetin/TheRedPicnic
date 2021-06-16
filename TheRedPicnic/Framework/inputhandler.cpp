@@ -1,5 +1,3 @@
-// COMP710 GP 2D Framework 2019
-
 // This include:
 #include "inputhandler.h"
 
@@ -64,11 +62,11 @@ InputHandler::ProcessInput(Game& game)
 			break;
 
 		case SDL_KEYDOWN:
-			SetKeyPressed(event, true);
+			SetKeyPressed(event.key.keysym.sym, true);
 			break;
 
 		case SDL_KEYUP:
-			SetKeyPressed(event, false);
+			SetKeyPressed(event.key.keysym.sym, false);
 			break;
 
 		default:
@@ -78,11 +76,9 @@ InputHandler::ProcessInput(Game& game)
 }
 
 void
-InputHandler::SetKeyPressed(SDL_Event event, bool status)
+InputHandler::SetKeyPressed(int i, bool status)
 {
-	LogManager::GetInstance().Log(SDL_GetKeyName(event.key.keysym.sym));
-
-	switch (event.key.keysym.sym)
+	switch (i)
 	{
 	case SDLK_UP:
 		m_KeyUp = status;

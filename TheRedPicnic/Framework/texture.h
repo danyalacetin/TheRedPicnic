@@ -1,4 +1,3 @@
-// COMP710 GP 2D Framework 2019
 #ifndef __TEXTURE_H__
 #define __TEXTURE_H__
 

@@ -1,4 +1,3 @@
-// COMP710 GP 2D Framework 2019
 #ifndef __INPUTHANDER_H__
 #define __INPUTHANDER_H__
 
@@ -19,7 +18,7 @@ public:
 	void ProcessInput(Game& game);
 
 	bool GetKeyPressed(int i);
-	void SetKeyPressed(SDL_Event event, bool status);
+	void SetKeyPressed(int i, bool status);
 
 protected:
 

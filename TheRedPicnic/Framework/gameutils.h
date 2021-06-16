@@ -52,4 +52,11 @@ enum SpriteCode
 	PIE
 };
 
+enum StateType
+{
+	MainMenu,
+	InGame,
+	InGameMenu
+};
+
 #endif //!__GAMEUTILS_H__

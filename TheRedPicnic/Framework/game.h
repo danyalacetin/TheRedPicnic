@@ -1,4 +1,3 @@
-// COMP710 GP 2D Framework 2019
 #ifndef __GAME_H__
 #define __GAME_H__
 
@@ -51,7 +50,6 @@ private:
 public:
 	static Vector2f m_screenDimensions;
 	static float m_screenScaleRatio;
-	static float m_ground;
 
 protected:
 	static Game* sm_pInstance;
