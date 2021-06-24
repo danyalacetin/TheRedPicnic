@@ -9,6 +9,8 @@
 
 class BackBuffer;
 class PlayableCharacter;
+class NonPlayableCharacter;
+class Camera;
 
 class GameState : public State
 {
@@ -35,6 +37,8 @@ public:
 
 protected:
 	PlayableCharacter* m_pPlayer;
+	NonPlayableCharacter* m_pEnemy;
+	NonPlayableCharacter* m_pEnemy2;
 
 private:
 

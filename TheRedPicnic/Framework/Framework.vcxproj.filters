@@ -141,6 +141,12 @@
     <ClInclude Include="spritemanager.h">
       <Filter>Header Files\Resource Management</Filter>
     </ClInclude>
+    <ClInclude Include="nonplayablecharacter.h">
+      <Filter>Header Files\Entity Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>Header Files\Entity Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp">
@@ -223,6 +229,12 @@
     </ClCompile>
     <ClCompile Include="spritemanager.cpp">
       <Filter>Source Files\Resource Management</Filter>
+    </ClCompile>
+    <ClCompile Include="nonplayablecharacter.cpp">
+      <Filter>Source Files\Entity Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Source Files\Entity Objects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -18,6 +18,8 @@ public:
 	void Process(float deltaTime);
 	void Draw(BackBuffer& backBuffer);
 
+	void ProcessMovement(float deltaTime);
+
 	void SetDead(bool dead);
 	bool IsDead() const;
 
@@ -35,6 +37,12 @@ public:
 
 	float GetVerticalVelocity() const;
 	void SetVerticalVelocity(float y);
+
+	float GetMaxHorizontalVelocity() const;
+	void SetMaxHorizontalVelocity(float x);
+
+	float GetMaxVerticalVelocity() const;
+	void SetMaxVerticalVelocity(float y);
 
 	bool IsGrounded();
 
@@ -55,6 +63,9 @@ protected:
 
 	float m_velocityX;
 	float m_velocityY;
+
+	float m_maxVelocityX;
+	float m_maxVelocityY;
 
 	bool m_grounded;
 	bool m_dead;

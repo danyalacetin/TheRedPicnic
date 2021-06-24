@@ -10,6 +10,7 @@
 #include "background.h"
 #include "gamestate.h"
 #include "logmanager.h"
+#include "camera.h"
 
 // Library includes:
 #include <cassert>
@@ -18,14 +19,17 @@ PlayableCharacter::PlayableCharacter()
 	: Character(),
 	m_candoubleJump(false)
 {
-
+	m_maxVelocityX = 250 * Game::m_screenScaleRatio / 6;
+	m_maxVelocityY = 500 * Game::m_screenScaleRatio / 6;
 }
 
 void
 PlayableCharacter::Process(float deltaTime)
 {
 	ProcessAnimation(deltaTime);
+	m_x -= Camera::GetInstance().GetVelocity() * deltaTime;
 	ProcessMovement(deltaTime);
+	ProcessPlayerBoundryChecks(deltaTime);
 	ProcessFlip();
 	m_pSprite->Process(deltaTime);
 }
@@ -69,49 +73,33 @@ PlayableCharacter::ProcessAnimation(float deltaTime)
 	}
 }
 
-//--------------MOVE-MOVEMENT-TO-ENTITY-CLASS------------------
-
 void
-PlayableCharacter::ProcessMovement(float deltaTime)
+PlayableCharacter::ProcessPlayerBoundryChecks(float deltaTime)
 {
-
-	// X movement
-	m_x += m_velocityX * deltaTime;
-
+	//ProccessPlayerBoundryCheck
 	if (m_x > GameState::m_playerBoundaryMax)
 	{
 		m_x = GameState::m_playerBoundaryMax;
 		Game::GetInstance().GetBackground()->SetCameraVelocity(-m_velocityX);
+		Camera::GetInstance().SetVelocity(-m_velocityX);
 	}
 	else if (m_x < GameState::m_playerBoundaryMin)
 	{
 		m_x = GameState::m_playerBoundaryMin;
 		Game::GetInstance().GetBackground()->SetCameraVelocity(-m_velocityX);
+		Camera::GetInstance().SetVelocity(-m_velocityX);
 	}
 	else
 	{
 		Game::GetInstance().GetBackground()->SetCameraVelocity(0);
+		Camera::GetInstance().SetVelocity(0);
 	}
 
-	//Y movement
-	m_y += m_velocityY * deltaTime;
-
-	if (m_y >= GameState::m_ground)
+	if (m_grounded)
 	{
-		m_y = GameState::m_ground;
-		m_velocityY = 0;
-		m_grounded = true;
 		m_candoubleJump = false;
 	}
-	else
-	{
-		m_velocityY += (GameState::m_gravity) * deltaTime * Game::m_screenScaleRatio / 6;
-		m_grounded = false;
-	}
 }
-
-//---------------------------------------------------------------
-
 
 bool
 PlayableCharacter::GetDoubleJump()

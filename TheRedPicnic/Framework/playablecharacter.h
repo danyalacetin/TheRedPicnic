@@ -12,7 +12,7 @@ public:
 
 	void Process(float deltaTime);
 	void ProcessAnimation(float deltaTime);
-	void ProcessMovement(float deltaTime);
+	void ProcessPlayerBoundryChecks(float deltaTime);
 	void SetDoubleJump(bool b);
 	bool GetDoubleJump();
 

@@ -197,12 +197,13 @@ Game::Draw(BackBuffer& backBuffer)
 	backBuffer.Clear();
 
 	m_pBackground->Draw(backBuffer);								//Draw Background always.
-	m_pGameStateStack.back()->Draw(backBuffer);						//Draws current state.
 	
 	if (m_pGameStateStack.back()->GetStateType() == InGameMenu)		//If in game menu state, draw the paused game aswell.
 	{
 		m_pGameState->Draw(backBuffer);
 	}
+
+	m_pGameStateStack.back()->Draw(backBuffer);						//Draws current state.
 
 	backBuffer.Present();
 }
