@@ -241,7 +241,6 @@ Game::DeleteState()
 {
 	delete m_pGameStateStack.back();
 	m_pGameStateStack.pop_back();
-	m_pGameStateStack.back()->SetInputWait(50);
 }
 
 Background*

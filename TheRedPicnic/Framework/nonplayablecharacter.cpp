@@ -20,61 +20,66 @@ NonPlayableCharacter::NonPlayableCharacter()
 	m_maxVelocityX = 250 * Game::m_screenScaleRatio / 6;
 	m_maxVelocityY = 500 * Game::m_screenScaleRatio / 6;
 	m_animationWait = 0;
+	m_state = IDLE;
 }
 
 void
 NonPlayableCharacter::Process(float deltaTime)
 {
-	ProcessAnimation(deltaTime);
+	switch (m_state)
+	{
+	case IDLE:
+		ProcessIdle(deltaTime);
+		break;
+	case WALKING:
+		ProcessWalking(deltaTime);
+		break;
+	case RUNNING:
+		ProcessRunning(deltaTime);
+		break;
+	case EATING:
+		ProcessEating(deltaTime);
+		break;
+
+	default:
+		break;
+	}
+
 	ProcessMovement(deltaTime);
 	ProcessFlip();
 	m_pSprite->Process(deltaTime);
 }
 
 void
-NonPlayableCharacter::ProcessAnimation(float deltaTime)
-{
-	if (m_pSprite->GetFrameX() == 0)
-	{
-		if (m_animationWait >= 3)
-		{
-			m_pSprite->SetPause(false);
-			m_pSprite->SetFrameX(m_pSprite->GetFrameWidth());
-			m_animationWait = 0;
-		}
-		else
-		{
-			m_pSprite->SetPause(true);
-			m_velocityX = 0;
-			m_animationWait += deltaTime;
-		}
-	}
-}
+NonPlayableCharacter::ProcessIdle(float deltaTime)
+{}
+
+void
+NonPlayableCharacter::ProcessWalking(float deltaTime) 
+{}
+
+void
+NonPlayableCharacter::ProcessRunning(float deltaTime) 
+{}
+
+void
+NonPlayableCharacter::ProcessEating(float deltaTime) 
+{}
 
 void
 NonPlayableCharacter::Tracking(Entity& e)
+{}
+
+void
+NonPlayableCharacter::SetState(NpcState state)
 {
-	if (!m_pSprite->IsPaused())
-	{
-		if (m_pSprite->GetFlipped())
-		{
-			m_velocityX = -m_maxVelocityX;
-		}
-		else
-		{
-			m_velocityX = m_maxVelocityX;
-		}
-	}
-	else
-	{
-		if (e.GetPositionX() > m_x)
-		{
-			m_pSprite->SetFlipped(false);
-		}
-		else if (e.GetPositionX() < m_x)
-		{
-			m_pSprite->SetFlipped(true);
-		}
-	}
+	m_state = state;
 }
+
+NpcState 
+NonPlayableCharacter::GetState()
+{
+	return m_state;
+}
+
 

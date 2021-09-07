@@ -30,8 +30,8 @@ public:
 	int GetSelected() const;
 	Button& GetSelectedButton() const;
 
-	int GetSelectionCooldown();
-	void SetSelectionCooldown(int cooldown);
+	float GetSelectionCooldown();
+	void SetSelectionCooldown(float cooldown);
 
 	void PositionElements(Vector2f containerDimensions);
 
@@ -41,7 +41,7 @@ private:
 
 	//Member Data:
 public:
-	int m_SelectionCooldown;
+	float m_SelectionCooldown;
 
 protected:
 

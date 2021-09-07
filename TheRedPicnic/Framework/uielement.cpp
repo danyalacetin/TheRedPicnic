@@ -35,8 +35,8 @@ void UiElement::SetPosition(int iX, int iY)
 
 void UiElement::SetDimensions(Vector2f newDimensions)
 {
-	m_dimensions.x = newDimensions.x * Game::m_screenScaleRatio / 6;
-	m_dimensions.y = newDimensions.y * Game::m_screenScaleRatio / 6;
+	m_dimensions.x = newDimensions.x * Game::m_screenScaleRatio/6;
+	m_dimensions.y = newDimensions.y * Game::m_screenScaleRatio/6;
 }
 
 Vector2f UiElement::GetDimensions()

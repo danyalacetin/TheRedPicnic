@@ -2,6 +2,7 @@
 #include "sprite.h"
 
 // Local includes:
+#include "game.h"
 #include "texture.h"
 #include "backbuffer.h"
 
@@ -29,8 +30,8 @@ Sprite::Initialise(Texture& texture)
 {
 	m_pTexture = &texture;
 
-	m_width = m_pTexture->GetWidth();
-	m_height = m_pTexture->GetHeight();
+	m_width = m_pTexture->GetWidth() * Game::m_screenScaleRatio;
+	m_height = m_pTexture->GetHeight() * Game::m_screenScaleRatio;
 
 	m_alpha = 255;
 

@@ -16,6 +16,7 @@ public:
 	bool Initialise(Sprite* sprite);
 
 	void Process(float deltaTime);
+	void ProcessFlash(float deltaTime);
 	void Draw(BackBuffer& backBuffer);
 
 	void ProcessMovement(float deltaTime);
@@ -32,6 +33,12 @@ public:
 	float GetPositionX() const;
 	float GetPositionY() const;
 
+	void SetWidth(float w);
+	float GetWidth();
+
+	void SetHeight(float h);
+	float GetHeight();
+
 	float GetHorizontalVelocity() const;
 	void SetHorizontalVelocity(float x); 
 
@@ -45,6 +52,12 @@ public:
 	void SetMaxVerticalVelocity(float y);
 
 	bool IsGrounded();
+
+	bool IsPushed();
+	void SetPushed(bool b);
+
+	bool IsFlashing();
+	void SetFlashing(bool b);
 
 protected:
 
@@ -61,13 +74,22 @@ protected:
 	float m_x;
 	float m_y;
 
+	float m_height;
+	float m_width;
+
 	float m_velocityX;
 	float m_velocityY;
 
 	float m_maxVelocityX;
 	float m_maxVelocityY;
 
+	float m_flashTime;
+	bool m_flashing;
+	bool m_hidden;
+
+
 	bool m_grounded;
+	bool m_pushed;
 	bool m_dead;
 
 private:

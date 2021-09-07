@@ -139,8 +139,8 @@ BackBuffer::DrawSprite(Sprite& sprite)
 {
 	SDL_Rect dest;
 
-	dest.x = sprite.GetX() - sprite.GetWidth() / 2;
-	dest.y = sprite.GetY() - sprite.GetHeight() / 2;
+	dest.x = sprite.GetX() - sprite.GetWidth()/2;
+	dest.y = sprite.GetY() - sprite.GetHeight()/2;
 	dest.w = sprite.GetWidth();
 	dest.h = sprite.GetHeight();
 
@@ -159,8 +159,8 @@ BackBuffer::DrawAnimatedSprite(AnimatedSprite& animatedSprite)
 	SDL_Rect dest;
 	SDL_Rect source;
 
-	dest.x = animatedSprite.GetSprite()->GetX();
-	dest.y = animatedSprite.GetSprite()->GetY();
+	dest.x = animatedSprite.GetSprite()->GetX() - animatedSprite.GetWidth()/2;
+	dest.y = animatedSprite.GetSprite()->GetY() - animatedSprite.GetHeight()/2;
 	dest.w = animatedSprite.GetWidth();
 	dest.h = animatedSprite.GetHeight();
 

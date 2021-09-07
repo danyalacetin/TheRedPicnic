@@ -40,7 +40,7 @@ GameMenuState::Process(float deltaTime)
 {
 	m_menuStack.top()->Process(deltaTime);
 
-	if (m_menuStack.top()->GetSelectionCooldown() == 0)
+	if (m_menuStack.top()->GetSelectionCooldown() <= 0)
 	{
 		if (ResourceManager::GetInstance().GetInputHandler().GetKeyPressed(SDLK_RETURN))
 		{
@@ -59,6 +59,7 @@ GameMenuState::Process(float deltaTime)
 
 		else if (ResourceManager::GetInstance().GetInputHandler().GetKeyPressed(SDLK_ESCAPE))
 		{
+			ResourceManager::GetInstance().GetInputHandler().SetKeyPressed(SDLK_ESCAPE, false);
 			EscapeButtonPressed();
 		}
 	}

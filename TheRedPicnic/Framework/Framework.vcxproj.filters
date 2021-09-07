@@ -61,6 +61,12 @@
     <Filter Include="Source Files\Utilities">
       <UniqueIdentifier>{3bcb731a-8bdb-432a-8518-6633b8072968}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Entity Objects\Enemies">
+      <UniqueIdentifier>{2ca2af4e-f015-401a-9e8c-9a307b311341}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity Objects\Enemies">
+      <UniqueIdentifier>{4e7df437-0569-40d2-b2ed-2f54d0710477}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="backbuffer.h">
@@ -146,6 +152,18 @@
     </ClInclude>
     <ClInclude Include="camera.h">
       <Filter>Header Files\Entity Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="fooditem.h">
+      <Filter>Header Files\Entity Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="bunny.h">
+      <Filter>Header Files\Entity Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="raccoon.h">
+      <Filter>Header Files\Entity Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="squirrel.h">
+      <Filter>Header Files\Entity Objects\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +253,18 @@
     </ClCompile>
     <ClCompile Include="camera.cpp">
       <Filter>Source Files\Entity Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="fooditem.cpp">
+      <Filter>Source Files\Entity Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="bunny.cpp">
+      <Filter>Source Files\Entity Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="raccoon.cpp">
+      <Filter>Source Files\Entity Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel.cpp">
+      <Filter>Source Files\Entity Objects\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

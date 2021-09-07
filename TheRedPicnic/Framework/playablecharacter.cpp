@@ -17,7 +17,7 @@
 
 PlayableCharacter::PlayableCharacter()
 	: Character(),
-	m_candoubleJump(false)
+	m_canDoubleJump(false)
 {
 	m_maxVelocityX = 250 * Game::m_screenScaleRatio / 6;
 	m_maxVelocityY = 500 * Game::m_screenScaleRatio / 6;
@@ -28,8 +28,8 @@ PlayableCharacter::Process(float deltaTime)
 {
 	ProcessAnimation(deltaTime);
 	m_x -= Camera::GetInstance().GetVelocity() * deltaTime;
-	ProcessMovement(deltaTime);
 	ProcessPlayerBoundryChecks(deltaTime);
+	ProcessMovement(deltaTime);
 	ProcessFlip();
 	m_pSprite->Process(deltaTime);
 }
@@ -37,6 +37,11 @@ PlayableCharacter::Process(float deltaTime)
 void
 PlayableCharacter::ProcessAnimation(float deltaTime)
 {
+	if (m_flashing)
+	{
+		ProcessFlash(deltaTime);
+	}
+
 	if (!m_grounded)
 	{	//Pause Animation, Set Jumping SpriteSheet
 		m_pSprite->SetPause(true);
@@ -57,7 +62,7 @@ PlayableCharacter::ProcessAnimation(float deltaTime)
 	}
 	else
 	{
-		m_candoubleJump = true;
+		m_canDoubleJump = true;
 
 		if (m_velocityX != 0)
 		{	//Animate Walking
@@ -94,22 +99,17 @@ PlayableCharacter::ProcessPlayerBoundryChecks(float deltaTime)
 		Game::GetInstance().GetBackground()->SetCameraVelocity(0);
 		Camera::GetInstance().SetVelocity(0);
 	}
-
-	if (m_grounded)
-	{
-		m_candoubleJump = false;
-	}
 }
 
 bool
 PlayableCharacter::GetDoubleJump()
 {
-	return m_candoubleJump;
+	return m_canDoubleJump;
 }
 
 void
 PlayableCharacter::SetDoubleJump(bool b)
 {
-	m_candoubleJump = b;
+	m_canDoubleJump = b;
 }
 

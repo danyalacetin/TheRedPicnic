@@ -34,6 +34,9 @@ Character::Initialise(Sprite* sprite)
 
 	m_pSprite->SetLooping(true);
 
+	m_width = m_pSprite->GetWidth();
+	m_height = m_pSprite->GetHeight();
+
 	return (true);
 }
 
@@ -43,7 +46,11 @@ Character::Draw(BackBuffer& backBuffer)
 	assert(m_pSprite);
 	m_pSprite->GetSprite()->SetX(static_cast<int>(m_x));
 	m_pSprite->GetSprite()->SetY(static_cast<int>(m_y));
-	m_pSprite->Draw(backBuffer);
+
+	if (!m_hidden)
+	{
+		m_pSprite->Draw(backBuffer);
+	}
 }
 
 void

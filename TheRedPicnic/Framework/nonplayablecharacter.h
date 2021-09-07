@@ -3,6 +3,7 @@
 
 // Forward Declarations:
 #include "Character.h"
+#include "gameutils.h"
 class AnimatedSprite;
 
 class NonPlayableCharacter : public Character {
@@ -11,8 +12,16 @@ public:
 	NonPlayableCharacter();
 
 	void Process(float deltaTime);
-	void ProcessAnimation(float deltaTime);
-	void Tracking(Entity& e);
+
+	virtual void ProcessIdle(float deltaTime);
+	virtual void ProcessWalking(float deltaTime);
+	virtual void ProcessRunning(float deltaTime);
+	virtual void ProcessEating(float deltaTime);
+
+	virtual void Tracking(Entity& e);
+
+	void SetState(NpcState state);
+	NpcState GetState();
 
 protected:
 
@@ -25,6 +34,7 @@ public:
 
 protected:
 	float m_animationWait;
+	NpcState m_state;
 
 private:
 

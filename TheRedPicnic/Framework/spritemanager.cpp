@@ -35,6 +35,7 @@ SpriteManager::~SpriteManager()
 	delete m_pPlayerSprite;
 	delete m_pBunnySprite;
 	delete m_pSquirrelSprite;
+	delete m_pRaccoonSprite;
 
 	// Objects
 	delete m_pAppleSprite;
@@ -62,6 +63,7 @@ SpriteManager::LoadSprites(BackBuffer& backBuffer)
 	m_pPlayerSprite = backBuffer.CreateSprite("assets/PlayerSpriteSheet.png");
 	m_pBunnySprite = backBuffer.CreateSprite("assets/Bunny.png");
 	m_pSquirrelSprite = backBuffer.CreateSprite("assets/Squirrel.png");
+	m_pRaccoonSprite = backBuffer.CreateSprite("assets/Raccoon.png");
 
 	// Objects
 	m_pAppleSprite = backBuffer.CreateSprite("assets/FoodSpriteApple.png");
@@ -95,6 +97,8 @@ SpriteManager::GetSprite(int i)
 		return m_pBunnySprite;
 	case SQUIRREL:
 		return m_pSquirrelSprite;
+	case RACCOON:
+		return m_pRaccoonSprite;
 	case APPLE:
 		return m_pAppleSprite;
 	case CHICKEN:

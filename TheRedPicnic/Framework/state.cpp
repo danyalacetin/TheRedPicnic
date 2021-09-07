@@ -31,29 +31,6 @@ State::Draw(BackBuffer& backBuffer)
 {
 }
 
-
-void
-State::ProcessInputWait()
-{
-	if (m_inputwait > 0) 
-	{
-		m_inputwait--;
-	}
-}
-
-int
-State::GetInputWait()
-{
-	return m_inputwait;
-}
-
-void
-State::SetInputWait(int i)
-{
-	m_inputwait = i;
-}
-
-
 StateType
 State::GetStateType()
 {

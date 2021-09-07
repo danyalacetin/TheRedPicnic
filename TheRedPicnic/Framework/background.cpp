@@ -43,25 +43,23 @@ Background::Initialise(Sprite* backgroundSprite, Sprite* midgroundSprite, Sprite
 	m_midgroundX[0] = 0;
 	m_groundX[0] = 0;
 
-	Vector2f screen = Game::m_screenDimensions;
-
 	//screen height / background sprite height = ratio
 	//Times both exsiting height and width to scale with screen resolution
 
-	m_pBackgroundSprite->SetWidth(m_pBackgroundSprite->GetDimensions().x * (screen.y / m_pBackgroundSprite->GetDimensions().y));
-	m_pBackgroundSprite->SetHeight(screen.y);
-	m_pBackgroundSprite->SetY(screen.y/2);
-	m_pBackgroundSprite->SetX(screen.x /2);
+	m_pBackgroundSprite->SetWidth(m_pBackgroundSprite->GetDimensions().x * (Game::m_screenDimensions.y / m_pBackgroundSprite->GetDimensions().y));
+	m_pBackgroundSprite->SetHeight(Game::m_screenDimensions.y);
+	m_pBackgroundSprite->SetY(Game::m_screenDimensions.y/2);
+	m_pBackgroundSprite->SetX(Game::m_screenDimensions.x /2);
 	
-	m_pMidgroundSprite->SetWidth(m_pMidgroundSprite->GetDimensions().x * (screen.y / m_pMidgroundSprite->GetDimensions().y));
-	m_pMidgroundSprite->SetHeight(screen.y);
-	m_pMidgroundSprite->SetY(screen.y /2);
-	m_pMidgroundSprite->SetX(screen.x / 2);
+	m_pMidgroundSprite->SetWidth(m_pMidgroundSprite->GetDimensions().x * (Game::m_screenDimensions.y / m_pMidgroundSprite->GetDimensions().y));
+	m_pMidgroundSprite->SetHeight(Game::m_screenDimensions.y);
+	m_pMidgroundSprite->SetY(Game::m_screenDimensions.y /2);
+	m_pMidgroundSprite->SetX(Game::m_screenDimensions.x / 2);
 
-	m_pGroundSprite->SetWidth(m_pGroundSprite->GetDimensions().x * (screen.y / m_pGroundSprite->GetDimensions().y));
-	m_pGroundSprite->SetHeight(screen.y);
-	m_pGroundSprite->SetY(screen.y /2);
-	m_pGroundSprite->SetX(screen.x / 2);
+	m_pGroundSprite->SetWidth(m_pGroundSprite->GetDimensions().x * (Game::m_screenDimensions.y / m_pGroundSprite->GetDimensions().y));
+	m_pGroundSprite->SetHeight(Game::m_screenDimensions.y);
+	m_pGroundSprite->SetY(Game::m_screenDimensions.y /2);
+	m_pGroundSprite->SetX(Game::m_screenDimensions.x / 2);
 	return (true);
 }
 

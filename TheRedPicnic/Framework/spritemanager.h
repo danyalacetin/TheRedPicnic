@@ -44,6 +44,7 @@ protected:
 	Sprite* m_pPlayerSprite;
 	Sprite* m_pBunnySprite;
 	Sprite* m_pSquirrelSprite;
+	Sprite* m_pRaccoonSprite;
 
 	// Objects
 	Sprite* m_pAppleSprite;

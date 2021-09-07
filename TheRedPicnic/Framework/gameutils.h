@@ -46,6 +46,7 @@ enum SpriteCode
 	PLAYER,
 	BUNNY,
 	SQUIRREL,
+	RACCOON,
 	APPLE,
 	CHICKEN,
 	MUFFIN,
@@ -57,6 +58,14 @@ enum StateType
 	MainMenu,
 	InGame,
 	InGameMenu
+};
+
+enum NpcState
+{
+	IDLE,
+	WALKING,
+	RUNNING,
+	EATING
 };
 
 #endif //!__GAMEUTILS_H__

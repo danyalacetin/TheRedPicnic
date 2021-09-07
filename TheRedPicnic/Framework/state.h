@@ -14,10 +14,7 @@ public:
 	virtual bool Initialise();
 	virtual void Process(float deltaTime);
 	virtual void Draw(BackBuffer& backBuffer);
-	virtual void ProcessInputWait();
 
-	virtual int GetInputWait();
-	virtual void SetInputWait(int i);
 	virtual StateType GetStateType();
 
 protected:

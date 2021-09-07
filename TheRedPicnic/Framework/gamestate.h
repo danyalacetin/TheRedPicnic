@@ -6,10 +6,12 @@
 
 // Library includes:
 #include <stack> 
+#include <vector>
 
 class BackBuffer;
 class PlayableCharacter;
 class NonPlayableCharacter;
+class FoodItem;
 class Camera;
 
 class GameState : public State
@@ -35,10 +37,11 @@ public:
 	static float m_playerBoundaryMin;
 	static float m_playerBoundaryMax;
 
+
 protected:
 	PlayableCharacter* m_pPlayer;
-	NonPlayableCharacter* m_pEnemy;
-	NonPlayableCharacter* m_pEnemy2;
+	std::vector<NonPlayableCharacter*> m_pEnemyContainer;
+	std::vector<FoodItem*> m_pFoodItemContainer;
 
 private:
 

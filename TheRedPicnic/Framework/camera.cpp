@@ -52,7 +52,6 @@ void
 Camera::Process(float deltaTime)
 {
 	m_position = m_velocity * deltaTime;
-	//m_velocity = 0;
 }
 
 float

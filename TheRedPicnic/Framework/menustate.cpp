@@ -42,6 +42,9 @@ MenuState::Initialise(Sprite* pButton, Sprite* pTitleScreen)
 	m_pButtonSprite = pButton;
 	m_pTitleScreen = pTitleScreen;
 
+	m_pButtonSprite->SetHeight(m_pButtonSprite->GetHeight() * Game::m_screenScaleRatio/24);
+	m_pButtonSprite->SetWidth(m_pButtonSprite->GetWidth() * Game::m_screenScaleRatio/24);
+
 	CreateMainMenu();
 
 	return (true);
@@ -52,7 +55,7 @@ MenuState::Process(float deltaTime)
 {
 	m_menuStack.top()->Process(deltaTime);
 
-	if (m_menuStack.top()->GetSelectionCooldown() == 0)
+	if (m_menuStack.top()->GetSelectionCooldown() <= 0)
 	{
 		if (ResourceManager::GetInstance().GetInputHandler().GetKeyPressed(SDLK_RETURN))
 		{
@@ -86,8 +89,8 @@ MenuState::CreateMainMenu()
 	m_pImage = new Image();
 	m_pImage->Initialise(m_pTitleScreen);
 	Vector2f vec;
-	vec.x = m_pImage->GetDimensions().x * 6;
-	vec.y = m_pImage->GetDimensions().y * 6;
+	vec.x = m_pImage->GetDimensions().x;
+	vec.y = m_pImage->GetDimensions().y;
 	m_pImage->SetDimensions(vec);
 	m_pMainMenu->AddChild(m_pImage);
 
@@ -183,7 +186,7 @@ MenuState::MenuReturn()
 	delete m_menuStack.top();
 	m_menuStack.pop();
 
-	//m_menuStack.top()->SetSelectionCooldown(50);
+	m_menuStack.top()->SetSelectionCooldown(0.4);
 }
 
 void
@@ -229,6 +232,6 @@ MenuState::DownButtonPressed()
 void
 MenuState::EnterButtonPressed()
 {
-	m_menuStack.top()->SetSelectionCooldown(50);
+	m_menuStack.top()->SetSelectionCooldown(0.4);
 	m_menuStack.top()->GetSelectedButton().OnPress();
 }

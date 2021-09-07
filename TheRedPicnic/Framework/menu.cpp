@@ -32,16 +32,16 @@ Menu::~Menu()
 bool
 Menu::Initialise()
 {
-	m_SelectionCooldown = 50;
+	m_SelectionCooldown = 0.5;
 	return (true);
 }
 
 void
 Menu::Process(float deltaTime)
 {
-	if (m_SelectionCooldown != 0)
+	if (m_SelectionCooldown >= 0)
 	{
-		m_SelectionCooldown--;
+		m_SelectionCooldown -= deltaTime;
 	}
 	m_buttonContainer[m_iSelectedButton]->Process(deltaTime);
 }
@@ -80,7 +80,7 @@ Menu::IncrementSelected()
 	if (m_iSelectedButton < m_buttonContainer.size() - 1)
 	{
 		m_iSelectedButton++;
-		m_SelectionCooldown = 50;
+		m_SelectionCooldown = 0.4;
 		//SoundManager::GetInstance().PlaySound(BUTTONSELECT);
 	}
 
@@ -93,7 +93,7 @@ Menu::DecrementSelected()
 	if (m_iSelectedButton > 0)
 	{
 		m_iSelectedButton--;
-		m_SelectionCooldown = 50;
+		m_SelectionCooldown = 0.4;
 		//SoundManager::GetInstance().PlaySound(BUTTONSELECT);
 	}
 
@@ -110,12 +110,12 @@ Button& Menu::GetSelectedButton() const
 	return *m_buttonContainer[m_iSelectedButton];
 }
 
-int Menu::GetSelectionCooldown()
+float Menu::GetSelectionCooldown()
 {
 	return m_SelectionCooldown;
 }
 
-void Menu::SetSelectionCooldown(int cooldown)
+void Menu::SetSelectionCooldown(float cooldown)
 {
 	m_SelectionCooldown = cooldown;
 }

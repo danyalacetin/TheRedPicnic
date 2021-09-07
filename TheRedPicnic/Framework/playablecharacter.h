@@ -26,7 +26,8 @@ public:
 
 
 protected:
-	bool m_candoubleJump;
+	bool m_canDoubleJump;
+	bool m_damageWait;
 
 private:
 

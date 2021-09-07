@@ -52,7 +52,7 @@ AnimatedSprite::Process(float deltaTime)
 			{
 				m_frameX += m_frameWidth;
 
-				if (m_frameX >= m_sprite->GetWidth())
+				if (m_frameX >= m_sprite->GetWidth() / Game::m_screenScaleRatio)
 				{
 					m_frameX = 0;
 
