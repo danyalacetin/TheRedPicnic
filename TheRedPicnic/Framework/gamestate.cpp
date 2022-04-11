@@ -27,6 +27,10 @@ float GameState::m_gravity = 0;
 float GameState::m_playerBoundaryMin = 0;
 float GameState::m_playerBoundaryMax = 0;
 
+PlayableCharacter* GameState::m_pPlayer = 0;
+std::vector<NonPlayableCharacter*> GameState::m_pEnemyContainer;
+std::vector<FoodItem*> GameState::m_pFoodItemContainer;
+
 GameState::GameState()
 	: State()
 {
@@ -56,8 +60,8 @@ GameState::Initialise()
 	m_type = InGame;
 
 	//Initilise game variables
-	m_ground = 190 * Game::m_screenScaleRatio;
 	m_gravity = 650;
+	m_ground = 190 * Game::m_screenScaleRatio;
 	m_playerBoundaryMax = 160 * Game::m_screenScaleRatio;
 	m_playerBoundaryMin = 60 * Game::m_screenScaleRatio;
 
@@ -86,7 +90,7 @@ GameState::Initialise()
 		m_pEnemyContainer.push_back(pEnemy);
 	}
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		Raccoon* pEnemy = new Raccoon();
 		pEnemy->Initialise(ResourceManager::GetInstance().GetSpriteManager().GetSprite(RACCOON));
@@ -100,6 +104,8 @@ GameState::Initialise()
 void
 GameState::Process(float deltaTime)
 {
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-PLAYER-=-INPUT-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 	//If Esc key pressed
 	if (ResourceManager::GetInstance().GetInputHandler().GetKeyPressed(SDLK_ESCAPE))
 	{
@@ -141,84 +147,14 @@ GameState::Process(float deltaTime)
 		}
 	}
 
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
 	//Proccess Background
 	Game::GetInstance().GetBackground()->Process(deltaTime);
 
 	//Proccess Player
 	m_pPlayer->Process(deltaTime);
-
-	//Process all enemies (Movment, Tracking and player collision)
-	for (NonPlayableCharacter* pEnemy : m_pEnemyContainer) 
-	{
-		pEnemy->Process(deltaTime);
-
-		//Process Tracking
-		if (m_pFoodItemContainer.empty())
-		{
-			pEnemy->Tracking(*m_pPlayer);
-		}
-		else
-		{
-			FoodItem* pFoodNearest = m_pFoodItemContainer.back();
-			for (FoodItem* pFood : m_pFoodItemContainer)
-			{
-				float distance = pFood->GetPositionX() - pEnemy->GetPositionX();
-				if (distance < 0)
-				{
-					distance *= -1;
-				}
-
-				float distance2 = pFoodNearest->GetPositionX() - pEnemy->GetPositionX();
-				if (distance2 < 0)
-				{
-					distance2 *= -1;
-				}
-
-				if (distance < distance2)
-				{
-					pFoodNearest = pFood;
-				}
-			}
-			pEnemy->Tracking(*pFoodNearest);
-		}
-
-		
-
-		//Process Collisions
-		if (pEnemy->IsCollidingWith(*m_pPlayer) && !m_pPlayer->IsFlashing())
-		{
-			FoodItem* pFood = new FoodItem();
-			pFood->Initialise(ResourceManager::GetInstance().GetSpriteManager().GetSprite(APPLE));
-			pFood->SetPosition(m_pPlayer->GetPositionX(), m_pPlayer->GetPositionY());
-			pFood->SetPushed(true);
-			m_pFoodItemContainer.push_back(pFood);
-
-			m_pPlayer->SetFlashing(true);
-			m_pPlayer->SetPushed(true);
-			m_pPlayer->SetVerticalVelocity(-m_pPlayer->GetMaxVerticalVelocity());
-
-			if (pEnemy->GetPositionX() >= m_pPlayer->GetPositionX())
-			{
-				m_pPlayer->SetHorizontalVelocity(-m_pPlayer->GetMaxHorizontalVelocity() * 2);
-				pFood->SetHorizontalVelocity(m_pPlayer->GetMaxHorizontalVelocity() * 2);
-			}
-			else
-			{
-				m_pPlayer->SetHorizontalVelocity(m_pPlayer->GetMaxHorizontalVelocity() * 2);
-				pFood->SetHorizontalVelocity(-m_pPlayer->GetMaxHorizontalVelocity() * 2);
-			}
-		}
-
-		for (FoodItem* pFood : m_pFoodItemContainer)
-		{
-
-			//if (pFood->IsCollidingWith(*pEnemy))
-			//{
-			//	
-			//}
-		}
-
-	}
 
 	//Process all fooditems (Movment and player collision)
 	for (FoodItem* pFood : m_pFoodItemContainer)
@@ -226,6 +162,11 @@ GameState::Process(float deltaTime)
 		pFood->ProcessMovement(deltaTime);
 	}
 
+	//Process all enemies (Movment, Tracking and Collision)
+	for (NonPlayableCharacter* pEnemy : m_pEnemyContainer) 
+	{
+		pEnemy->Process(deltaTime);
+	}
 }
 
 void

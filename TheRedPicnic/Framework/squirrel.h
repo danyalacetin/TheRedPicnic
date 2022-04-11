@@ -10,6 +10,8 @@ class Squirrel : public NonPlayableCharacter {
 public:
 	Squirrel();
 
+	void ProcessAnimation(float deltaTime);
+
 	void ProcessIdle(float deltaTime);
 	void ProcessWalking(float deltaTime);
 	void ProcessEating(float deltaTime);

@@ -13,6 +13,7 @@ class Menu;
 class Image;
 class Button;
 class Label;
+class SplashScreen;
 
 class MenuState : public State
 {
@@ -26,6 +27,10 @@ public:
 	void Process(float deltaTime);
 	void Draw(BackBuffer& backBuffer);
 
+	void ProcessSplash(float deltaTime);
+	void DrawSplash(BackBuffer& backBuffer);
+
+	void CreateSplash();
 	void CreateMainMenu();
 	void CreateOptionsMenu();
 	void CreateCreditsMenu();
@@ -57,6 +62,10 @@ private:
 	//SPRITES
 	Sprite* m_pButtonSprite;
 	Sprite* m_pTitleScreen;
+
+	//SPLASH SCREENS
+	SplashScreen* m_pSplash;
+	std::stack<SplashScreen*> m_splashStack;
 
 	//MENUS
 	Menu* m_pMainMenu;

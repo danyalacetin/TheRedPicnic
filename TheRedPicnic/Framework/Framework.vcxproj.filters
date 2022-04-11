@@ -165,6 +165,9 @@
     <ClInclude Include="squirrel.h">
       <Filter>Header Files\Entity Objects\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="splashscreen.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp">
@@ -265,6 +268,9 @@
     </ClCompile>
     <ClCompile Include="squirrel.cpp">
       <Filter>Source Files\Entity Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="splashscreen.cpp">
+      <Filter>Source Files\Menus</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

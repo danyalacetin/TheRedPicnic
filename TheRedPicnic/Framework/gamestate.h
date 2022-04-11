@@ -36,12 +36,11 @@ public:
 	static float m_gravity;
 	static float m_playerBoundaryMin;
 	static float m_playerBoundaryMax;
-
+	static PlayableCharacter* m_pPlayer;
+	static std::vector<NonPlayableCharacter*> m_pEnemyContainer;
+	static std::vector<FoodItem*> m_pFoodItemContainer;
 
 protected:
-	PlayableCharacter* m_pPlayer;
-	std::vector<NonPlayableCharacter*> m_pEnemyContainer;
-	std::vector<FoodItem*> m_pFoodItemContainer;
 
 private:
 

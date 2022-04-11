@@ -10,11 +10,14 @@ class Bunny : public NonPlayableCharacter {
 public:
 	Bunny();
 
+	void ProcessAnimation(float deltaTime);
+
 	void ProcessIdle(float deltaTime);
 	void ProcessWalking(float deltaTime);
 	void ProcessEating(float deltaTime);
 
 	void Tracking(Entity& e);
+	void FoodReached(FoodItem& food);
 
 protected:
 

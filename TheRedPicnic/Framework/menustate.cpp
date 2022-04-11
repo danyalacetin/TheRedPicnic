@@ -14,6 +14,8 @@
 #include "gamestate.h"
 #include "resourcemanager.h"
 #include "inputhandler.h"
+#include "splashscreen.h"
+#include "spritemanager.h"
 
 // Library includes:
 #include <cassert>
@@ -27,6 +29,12 @@ MenuState::MenuState()
 
 MenuState::~MenuState()
 {
+	while (!m_splashStack.empty())
+	{
+		delete m_splashStack.top();
+		m_splashStack.pop();
+	}
+
 	while (!m_menuStack.empty())
 	{
 		delete m_menuStack.top();
@@ -45,7 +53,8 @@ MenuState::Initialise(Sprite* pButton, Sprite* pTitleScreen)
 	m_pButtonSprite->SetHeight(m_pButtonSprite->GetHeight() * Game::m_screenScaleRatio/24);
 	m_pButtonSprite->SetWidth(m_pButtonSprite->GetWidth() * Game::m_screenScaleRatio/24);
 
-	CreateMainMenu();
+	CreateSplash();
+	//CreateMainMenu();
 
 	return (true);
 }
@@ -53,23 +62,30 @@ MenuState::Initialise(Sprite* pButton, Sprite* pTitleScreen)
 void
 MenuState::Process(float deltaTime)
 {
-	m_menuStack.top()->Process(deltaTime);
-
-	if (m_menuStack.top()->GetSelectionCooldown() <= 0)
+	if (!m_splashStack.empty())
 	{
-		if (ResourceManager::GetInstance().GetInputHandler().GetKeyPressed(SDLK_RETURN))
-		{
-			EnterButtonPressed();
-		}
+		ProcessSplash(deltaTime);
+	}
+	else
+	{
+		m_menuStack.top()->Process(deltaTime);
 
-		else if (ResourceManager::GetInstance().GetInputHandler().GetKeyPressed(SDLK_UP))
+		if (m_menuStack.top()->GetSelectionCooldown() <= 0)
 		{
-			UpButtonPressed();
-		}
+			if (ResourceManager::GetInstance().GetInputHandler().GetKeyPressed(SDLK_RETURN))
+			{
+				EnterButtonPressed();
+			}
 
-		else if (ResourceManager::GetInstance().GetInputHandler().GetKeyPressed(SDLK_DOWN))
-		{
-			DownButtonPressed();
+			else if (ResourceManager::GetInstance().GetInputHandler().GetKeyPressed(SDLK_UP))
+			{
+				UpButtonPressed();
+			}
+
+			else if (ResourceManager::GetInstance().GetInputHandler().GetKeyPressed(SDLK_DOWN))
+			{
+				DownButtonPressed();
+			}
 		}
 	}
 }
@@ -77,7 +93,25 @@ MenuState::Process(float deltaTime)
 void
 MenuState::Draw(BackBuffer& backBuffer)
 {
-	m_menuStack.top()->Draw(backBuffer);
+	if (!m_splashStack.empty())
+	{
+		DrawSplash(backBuffer);
+	}
+	else
+	{
+		m_menuStack.top()->Draw(backBuffer);
+	}
+}
+
+void
+MenuState::CreateSplash()
+{
+	//InputEventHandler::GetInstance().Register(COMMAND_QUIT, [this] { ExcapeButtonPressed(); });
+	//InputEventHandler::GetInstance().Register(COMMAND_MENU_SELECT, [this] {EnterButtonPressed(); });
+
+	m_pSplash = new SplashScreen();
+	m_pSplash->Initialise(ResourceManager::GetInstance().GetSpriteManager().GetSprite(FMOD));
+	m_splashStack.push(m_pSplash);
 }
 
 void
@@ -234,4 +268,33 @@ MenuState::EnterButtonPressed()
 {
 	m_menuStack.top()->SetSelectionCooldown(0.4);
 	m_menuStack.top()->GetSelectedButton().OnPress();
+}
+
+void
+MenuState::ProcessSplash(float deltaTime)
+{
+	if (!m_splashStack.empty())
+	{
+		if (m_splashStack.top()->Isfinished())
+		{
+			delete m_splashStack.top();
+			m_splashStack.pop();
+
+			if (m_splashStack.empty())
+			{
+				CreateMainMenu();
+			}
+
+		}
+		else
+		{
+			m_splashStack.top()->Process(deltaTime);
+		}
+	}
+}
+
+void
+MenuState::DrawSplash(BackBuffer& backBuffer)
+{
+	m_splashStack.top()->Draw(backBuffer);
 }

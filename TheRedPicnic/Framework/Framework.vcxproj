@@ -56,13 +56,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\API\API-SDL\SDL2-devel-2.0.10-VC\SDL2-2.0.10\include\;$(SolutionDir)\API\API-SDL\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\include;$(SolutionDir)\API\API-SDL\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Lib\SDL2-devel\SDL2-2.0.10\include\;$(SolutionDir)\Lib\SDL2_image-devel\SDL2_image-2.0.5\include;$(SolutionDir)\Lib\SDL2_ttf-devel\SDL2_ttf-2.0.15\include\;$(SolutionDir)\Lib\FMOD\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\API\API-SDL\SDL2-devel-2.0.10-VC\SDL2-2.0.10\lib\x86;$(SolutionDir)\API\API-SDL\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\lib\x86;$(SolutionDir)\API\API-SDL\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\lib\x86\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Lib\SDL2-devel\SDL2-2.0.10\lib\x86;$(SolutionDir)\Lib\SDL2_image-devel\SDL2_image-2.0.5\lib\x86;$(SolutionDir)\Lib\SDL2_ttf-devel\SDL2_ttf-2.0.15\lib\x86\;$(SolutionDir)\Lib\FMOD\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -108,6 +108,7 @@
     <ClInclude Include="playablecharacter.h" />
     <ClInclude Include="raccoon.h" />
     <ClInclude Include="resourcemanager.h" />
+    <ClInclude Include="splashscreen.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="spritemanager.h" />
     <ClInclude Include="squirrel.h" />
@@ -143,6 +144,7 @@
     <ClCompile Include="playablecharacter.cpp" />
     <ClCompile Include="raccoon.cpp" />
     <ClCompile Include="resourcemanager.cpp" />
+    <ClCompile Include="splashscreen.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="spritemanager.cpp" />
     <ClCompile Include="squirrel.cpp" />
