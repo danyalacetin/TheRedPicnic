@@ -10,6 +10,7 @@
 // Forward Declarations
 class BackBuffer;
 class InputHandler;
+class SoundManager;
 class Sprite;
 class AnimatedSprite;
 class GameState;

@@ -168,6 +168,9 @@
     <ClInclude Include="splashscreen.h">
       <Filter>Header Files\Menus</Filter>
     </ClInclude>
+    <ClInclude Include="soundmanager.h">
+      <Filter>Header Files\Resource Management</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp">
@@ -271,6 +274,9 @@
     </ClCompile>
     <ClCompile Include="splashscreen.cpp">
       <Filter>Source Files\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="soundmanager.cpp">
+      <Filter>Source Files\Resource Management</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -108,6 +108,7 @@
     <ClInclude Include="playablecharacter.h" />
     <ClInclude Include="raccoon.h" />
     <ClInclude Include="resourcemanager.h" />
+    <ClInclude Include="soundmanager.h" />
     <ClInclude Include="splashscreen.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="spritemanager.h" />
@@ -144,6 +145,7 @@
     <ClCompile Include="playablecharacter.cpp" />
     <ClCompile Include="raccoon.cpp" />
     <ClCompile Include="resourcemanager.cpp" />
+    <ClCompile Include="soundmanager.cpp" />
     <ClCompile Include="splashscreen.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="spritemanager.cpp" />

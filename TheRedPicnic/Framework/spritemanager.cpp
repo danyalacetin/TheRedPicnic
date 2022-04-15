@@ -83,7 +83,7 @@ SpriteManager::GetSprite(int i)
 		return m_pTitleScreenSprite;
 	case BUTTON:
 		return m_pButtonSprite;
-	case FMOD:
+	case FMODSPRITE:
 		return m_pFmodSprite;
 	case BACKGROUND:
 		return m_pBackgroundSprite;

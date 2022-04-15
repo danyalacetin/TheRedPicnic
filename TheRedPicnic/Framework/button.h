@@ -13,6 +13,7 @@
 class BackBuffer;
 class Sprite;
 class Label;
+class SoundManager;
 
 class Button : public UiElement
 {

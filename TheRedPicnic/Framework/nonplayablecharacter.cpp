@@ -15,6 +15,7 @@
 #include "playablecharacter.h"
 #include "resourcemanager.h"
 #include "spritemanager.h"
+#include "soundmanager.h"
 
 // Library includes:
 #include <cassert>
@@ -106,6 +107,8 @@ NonPlayableCharacter::ProcessCollisionDetection(float deltaTime)
 			GameState::m_pPlayer->SetHorizontalVelocity(GameState::m_pPlayer->GetMaxHorizontalVelocity() * 2);
 			pFood->SetHorizontalVelocity(-GameState::m_pPlayer->GetMaxHorizontalVelocity() * 2);
 		}
+
+		SoundManager::GetInstance().PlaySound(PLAYERHURT);
 	}
 }
 

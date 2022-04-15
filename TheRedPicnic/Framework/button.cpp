@@ -5,7 +5,7 @@
 #include "sprite.h"
 #include "game.h"
 #include "label.h"
-//#include "../soundmanager.h"
+#include "soundmanager.h"
 
 // Library includes:
 #include <cassert>
@@ -64,7 +64,7 @@ Button::Draw(BackBuffer& backBuffer)
 void
 Button::OnPress()
 {
-	//SoundManager::GetInstance().PlaySound(BUTTONPRESS);
+	SoundManager::GetInstance().PlaySound(BUTTONPRESS);
 	m_fnOnPress();
 }
 

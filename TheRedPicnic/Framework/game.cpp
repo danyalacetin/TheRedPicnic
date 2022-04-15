@@ -13,6 +13,7 @@
 #include "gamestate.h"
 #include "gamemenustate.h"
 #include "background.h"
+#include "soundmanager.h"
 
 // Library includes:
 #include <cassert>
@@ -76,6 +77,7 @@ Game::~Game()
 	}
 
 	ResourceManager::DestroyInstance();
+	SoundManager::DestroyInstance();
 }
 
 bool 
@@ -184,6 +186,9 @@ Game::Process(float deltaTime)
 		m_FPS = m_frameCount;
 		m_frameCount = 0;
 	}
+
+	// Plays Sound:
+	SoundManager::GetInstance().Update();
 
 	// Update the game world simulation:
 	m_pGameStateStack.back()->Process(deltaTime);

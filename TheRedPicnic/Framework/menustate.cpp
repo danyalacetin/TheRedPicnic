@@ -16,10 +16,13 @@
 #include "inputhandler.h"
 #include "splashscreen.h"
 #include "spritemanager.h"
+#include "soundmanager.h"
 
 // Library includes:
 #include <cassert>
 #include <cstdio>
+#include <iostream>
+#include <string>
 
 MenuState::MenuState() 
 	: State()
@@ -110,7 +113,7 @@ MenuState::CreateSplash()
 	//InputEventHandler::GetInstance().Register(COMMAND_MENU_SELECT, [this] {EnterButtonPressed(); });
 
 	m_pSplash = new SplashScreen();
-	m_pSplash->Initialise(ResourceManager::GetInstance().GetSpriteManager().GetSprite(FMOD));
+	m_pSplash->Initialise(ResourceManager::GetInstance().GetSpriteManager().GetSprite(FMODSPRITE));
 	m_splashStack.push(m_pSplash);
 }
 
@@ -168,14 +171,69 @@ MenuState::CreateOptionsMenu()
 	m_pOptionsMenu->AddChild(m_pLabel);
 
 	m_pButton = new Button();
-	m_pButton->Initialise(m_pButtonSprite, "Back");
+	m_pButton->Initialise(m_pButtonSprite, "Audio Options");
 	m_pButton->SetSelected(true);
+	m_pButton->SetOnPress([&] { CreateAudioOptionsMenu(); });
+	m_pOptionsMenu->AddButton(m_pButton);
+
+	m_pButton = new Button();
+	m_pButton->Initialise(m_pButtonSprite, "Back");
+	m_pButton->SetSelected(false);
 	m_pButton->SetOnPress([&] { MenuReturn(); });
 	m_pOptionsMenu->AddButton(m_pButton);
 
 	m_pOptionsMenu->PositionElements(Game::m_screenDimensions);
 
 	m_menuStack.push(m_pOptionsMenu);
+}
+
+void
+MenuState::CreateAudioOptionsMenu()
+{
+	m_pAudioOptionsMenu = new Menu();
+	m_pAudioOptionsMenu->Initialise();
+
+	m_pLabel = new Label();
+	m_pLabel->Initialise("Audio Options");
+	m_pLabel->SetSize(40);
+	m_pLabel->SetAlignment(ALIGN_CENTRE);
+	m_pLabel->SetColour(0xFF, 0x00, 0x00);
+	m_pAudioOptionsMenu->AddChild(m_pLabel);
+
+	m_pLabel = new Label();
+	m_pLabel->Initialise("Audio %");
+	m_pLabel->SetSize(40);
+	m_pLabel->SetAlignment(ALIGN_CENTRE);
+	m_pLabel->SetColour(0x00, 0x00, 0x00);
+	m_pAudioOptionsMenu->AddChild(m_pLabel);
+
+	m_pButton = new Button();
+	m_pButton->Initialise(m_pButtonSprite, "Toggle Music");
+	m_pButton->SetSelected(true);
+	m_pButton->SetOnPress([&] { SoundManager::GetInstance().ToggleMusic(); });
+	m_pAudioOptionsMenu->AddButton(m_pButton);
+
+	m_pButton = new Button();
+	m_pButton->Initialise(m_pButtonSprite, "Increase Volume");
+	m_pButton->SetSelected(false);
+	m_pButton->SetOnPress([&] { SoundManager::GetInstance().IncreaseVol(); m_pLabel->SetText("Audio up"); });
+	m_pAudioOptionsMenu->AddButton(m_pButton);
+
+	m_pButton = new Button();
+	m_pButton->Initialise(m_pButtonSprite, "Decrease Volume");
+	m_pButton->SetSelected(false);
+	m_pButton->SetOnPress([&] { SoundManager::GetInstance().DecreaseVol(); m_pLabel->SetText("Audio down"); });
+	m_pAudioOptionsMenu->AddButton(m_pButton);
+
+	m_pButton = new Button();
+	m_pButton->Initialise(m_pButtonSprite, "Back");
+	m_pButton->SetSelected(false);
+	m_pButton->SetOnPress([&] { MenuReturn(); });
+	m_pAudioOptionsMenu->AddButton(m_pButton);
+
+	m_pAudioOptionsMenu->PositionElements(Game::m_screenDimensions);
+
+	m_menuStack.push(m_pAudioOptionsMenu);
 }
 
 void

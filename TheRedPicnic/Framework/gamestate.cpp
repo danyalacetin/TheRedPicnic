@@ -45,11 +45,13 @@ GameState::~GameState()
 		delete pEnemy;
 		pEnemy = nullptr;
 	}
+	m_pEnemyContainer.clear();
 
 	for (FoodItem* pFood : m_pFoodItemContainer) {
 		delete pFood;
 		pFood = nullptr;
 	}
+	m_pFoodItemContainer.clear();
 
 	Camera::DestroyInstance();
 }

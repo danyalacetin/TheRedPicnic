@@ -6,7 +6,7 @@
 #include "game.h"
 #include "button.h"
 #include "uielement.h"
-//#include "../soundmanager.h"
+#include "soundmanager.h"
 
 // Library includes:
 #include <cassert>
@@ -81,7 +81,7 @@ Menu::IncrementSelected()
 	{
 		m_iSelectedButton++;
 		m_SelectionCooldown = 0.4;
-		//SoundManager::GetInstance().PlaySound(BUTTONSELECT);
+		SoundManager::GetInstance().PlaySound(BUTTONSELECT);
 	}
 
 	return m_iSelectedButton;
@@ -94,7 +94,7 @@ Menu::DecrementSelected()
 	{
 		m_iSelectedButton--;
 		m_SelectionCooldown = 0.4;
-		//SoundManager::GetInstance().PlaySound(BUTTONSELECT);
+		SoundManager::GetInstance().PlaySound(BUTTONSELECT);
 	}
 
 	return m_iSelectedButton;

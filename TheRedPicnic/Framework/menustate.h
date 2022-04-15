@@ -33,6 +33,7 @@ public:
 	void CreateSplash();
 	void CreateMainMenu();
 	void CreateOptionsMenu();
+	void CreateAudioOptionsMenu();
 	void CreateCreditsMenu();
 
 	void MenuReturn();
@@ -70,6 +71,7 @@ private:
 	//MENUS
 	Menu* m_pMainMenu;
 	Menu* m_pOptionsMenu;
+	Menu* m_pAudioOptionsMenu;
 	Menu* m_pCreditsMenu;
 	std::stack<Menu*> m_menuStack;
 
