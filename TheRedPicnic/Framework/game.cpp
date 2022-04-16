@@ -126,6 +126,11 @@ Game::Initialise()
 
 	m_pGameStateStack.push_back(m_pMenuState);
 
+	m_fadeOut = false;
+	m_fadeIn = true;
+	m_fadeTo = MainMenu;
+	m_fadeOpacity = 255; //full black
+
 	return (true);
 }
 
@@ -187,11 +192,48 @@ Game::Process(float deltaTime)
 		m_frameCount = 0;
 	}
 
-	// Plays Sound:
-	SoundManager::GetInstance().Update();
+	if (m_fadeIn)
+	{
+		m_fadeOpacity -= 5;
 
-	// Update the game world simulation:
-	m_pGameStateStack.back()->Process(deltaTime);
+		if (m_fadeOpacity <= 0)
+		{
+			m_fadeIn = false;
+			m_fadeOpacity = 0;
+		}
+	}
+
+	if (m_fadeOut)
+	{
+		m_fadeOpacity += 5;
+
+		if (m_fadeOpacity >= 255)
+		{
+
+			m_fadeOut = false;
+			m_fadeIn = true;
+			m_fadeOpacity = 255;
+
+			switch (m_fadeTo)
+			{
+			case MainMenu:
+				DeleteState();
+				DeleteState();
+				break;
+			case InGame:
+				AddGameState();
+				break;
+			}
+		}
+	}
+	else
+	{
+		// Plays Sound:
+		SoundManager::GetInstance().Update();
+
+		// Update the game world simulation:
+		m_pGameStateStack.back()->Process(deltaTime);
+	}
 }
 
 void 
@@ -201,8 +243,8 @@ Game::Draw(BackBuffer& backBuffer)
 
 	backBuffer.Clear();
 
-	m_pBackground->Draw(backBuffer);								//Draw Background always.
-	
+	m_pBackground->Draw(backBuffer);	//Draw Background always.
+
 	if (m_pGameStateStack.back()->GetStateType() == InGameMenu)		//If in game menu state, draw the paused game aswell.
 	{
 		m_pGameState->Draw(backBuffer);
@@ -210,6 +252,8 @@ Game::Draw(BackBuffer& backBuffer)
 
 	m_pGameStateStack.back()->Draw(backBuffer);						//Draws current state.
 
+	backBuffer.SetDrawColour(0,0,0, m_fadeOpacity);
+	backBuffer.DrawRectangle(0, 0, m_screenDimensions.x, m_screenDimensions.y);
 	backBuffer.Present();
 }
 
@@ -246,6 +290,13 @@ Game::DeleteState()
 {
 	delete m_pGameStateStack.back();
 	m_pGameStateStack.pop_back();
+}
+
+void
+Game::FadeTo(StateType state)
+{
+	m_fadeTo = state;
+	m_fadeOut = true;
 }
 
 Background*

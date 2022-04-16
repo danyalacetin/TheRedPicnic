@@ -14,8 +14,14 @@ enum Sounds
 	BUTTONPRESS,
 	BUTTONSELECT,
 	PLAYERHURT,
-	GAMESTART,
-	MUSIC
+	PLAYERJUMP,
+	GAMESTART
+};
+
+enum Music
+{
+	TITLEMUSIC,
+	BACKGROUNDMUSIC
 };
 
 enum Channels
@@ -38,12 +44,13 @@ public:
 
 	bool LoadSounds();
 	void PlaySound(Sounds sound);
+	void PlayMusic(Music music);
 
 	void ToggleMusic();
-	void ToggleSounds();
 
 	void IncreaseVol();
 	void DecreaseVol();
+	float GetVolume();
 
 	void Update();
 
@@ -69,16 +76,18 @@ protected:
 	FMOD::Sound* m_pButtonPress;
 	FMOD::Sound* m_pPlayerHurt;
 	FMOD::Sound* m_pGameStart;
+	FMOD::Sound* m_pPlayerJump;
 
 	//Music
+	FMOD::Sound* m_pTitleMusic;
 	FMOD::Sound* m_pBackgroundMusic;
 
 	bool m_bIsInitialised;
 	std::string m_folderLocation;
 
-	bool m_musicPlaying;
-	bool m_soundPlaying;
+	Music m_music;
 
+	bool m_musicPlaying;
 	float m_volume;
 
 private:

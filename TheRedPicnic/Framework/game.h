@@ -35,6 +35,7 @@ public:
 	void AddGameState();
 	void AddGameMenuState();
 	void DeleteState();
+	void FadeTo(StateType state);
 	Background* GetBackground();
 
 protected:
@@ -67,7 +68,11 @@ protected:
 	int m_numUpdates;
 	bool m_drawDebugInfo;
 
-
+	// Fading Properites
+	bool m_fadeOut;
+	bool m_fadeIn;
+	StateType m_fadeTo;
+	float m_fadeOpacity;
 
 	// Game States:
 	std::vector<State*> m_pGameStateStack;

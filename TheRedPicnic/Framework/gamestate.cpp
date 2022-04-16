@@ -4,6 +4,7 @@
 // Local includes:
 #include "game.h"
 #include "state.h"
+#include "soundmanager.h"
 #include "resourcemanager.h"
 #include "inputhandler.h"
 #include "playablecharacter.h"
@@ -54,6 +55,9 @@ GameState::~GameState()
 	m_pFoodItemContainer.clear();
 
 	Camera::DestroyInstance();
+
+	//Whenever the gamestate gets deleted, it alwasys goes back to main menu. So change song to title music
+	SoundManager::GetInstance().PlayMusic(TITLEMUSIC);
 }
 
 bool
@@ -73,14 +77,14 @@ GameState::Initialise()
 	//Create and initilise player
 	m_pPlayer = new PlayableCharacter();
 	m_pPlayer->Initialise(ResourceManager::GetInstance().GetSpriteManager().GetSprite(PLAYER));
-	m_pPlayer->SetPosition(30 * Game::m_screenScaleRatio, m_ground);
+	m_pPlayer->SetPosition(m_playerBoundaryMin, m_ground - m_pPlayer->GetHeight() / 2);
 
 	//Create and initilise npcs
 	for (int i = 0;i < 2;i++)
 	{
 		Squirrel* pEnemy = new Squirrel();
 		pEnemy->Initialise(ResourceManager::GetInstance().GetSpriteManager().GetSprite(SQUIRREL));
-		pEnemy->SetPosition(140 * m_pEnemyContainer.size() * Game::m_screenScaleRatio, m_ground - (i*50));
+		pEnemy->SetPosition(140 * m_pEnemyContainer.size() * Game::m_screenScaleRatio, m_ground - pEnemy->GetHeight() / 2);
 		m_pEnemyContainer.push_back(pEnemy);
 	}
 
@@ -88,7 +92,7 @@ GameState::Initialise()
 	{
 		Bunny* pEnemy = new Bunny();
 		pEnemy->Initialise(ResourceManager::GetInstance().GetSpriteManager().GetSprite(BUNNY));
-		pEnemy->SetPosition(140 * m_pEnemyContainer.size() * Game::m_screenScaleRatio, m_ground - (i * 50));
+		pEnemy->SetPosition(140 * m_pEnemyContainer.size() * Game::m_screenScaleRatio, m_ground - pEnemy->GetHeight() / 2);
 		m_pEnemyContainer.push_back(pEnemy);
 	}
 
@@ -96,9 +100,12 @@ GameState::Initialise()
 	{
 		Raccoon* pEnemy = new Raccoon();
 		pEnemy->Initialise(ResourceManager::GetInstance().GetSpriteManager().GetSprite(RACCOON));
-		pEnemy->SetPosition(140 * m_pEnemyContainer.size() * Game::m_screenScaleRatio, m_ground - (i * 50));
+		pEnemy->SetPosition(140 * m_pEnemyContainer.size() * Game::m_screenScaleRatio, m_ground - pEnemy->GetHeight() / 2);
 		m_pEnemyContainer.push_back(pEnemy);
 	}
+
+	//play background music
+	SoundManager::GetInstance().PlayMusic(BACKGROUNDMUSIC);
 
 	return (true);
 }
@@ -127,6 +134,7 @@ GameState::Process(float deltaTime)
 				m_pPlayer->SetVerticalVelocity(-m_pPlayer->GetMaxVerticalVelocity());
 				m_pPlayer->SetDoubleJump(!m_pPlayer->GetDoubleJump());
 				ResourceManager::GetInstance().GetInputHandler().SetKeyPressed(SDLK_UP, false);
+				SoundManager::GetInstance().PlaySound(PLAYERJUMP);
 			}
 		}
 

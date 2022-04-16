@@ -81,6 +81,8 @@ BackBuffer::Initialise(int width, int height)
 		}
 	}
 
+	SDL_SetRenderDrawBlendMode(m_pRenderer, SDL_BLENDMODE_BLEND);
+
 	SetFullscreen(true);
 	SDL_Delay(1000);
 

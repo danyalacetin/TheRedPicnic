@@ -29,8 +29,9 @@ SoundManager::~SoundManager()
 bool SoundManager::Initialise()
 {
 	m_volume = 0.5f;
+	m_music = TITLEMUSIC;
+
 	LoadSounds();
-	PlaySound(MUSIC); 
 	return (true);
 }
 
@@ -67,8 +68,10 @@ SoundManager::LoadSounds()
 	m_pSystem->createSound("assets/sounds/buttonSelect.wav", FMOD_DEFAULT, nullptr, &m_pButtonSelected);
 	m_pSystem->createSound("assets/sounds/buttonPress.wav", FMOD_DEFAULT, nullptr, &m_pButtonPress);
 	m_pSystem->createSound("assets/sounds/playerHurt.wav", FMOD_DEFAULT, nullptr, &m_pPlayerHurt);
+	m_pSystem->createSound("assets/sounds/playerJump.wav", FMOD_DEFAULT, nullptr, &m_pPlayerJump);
 	m_pSystem->createSound("assets/sounds/gameStart.wav", FMOD_DEFAULT, nullptr, &m_pGameStart);
-	m_pSystem->createSound("assets/music/dingos.wav", FMOD_LOOP_NORMAL, nullptr, &m_pBackgroundMusic);
+	m_pSystem->createSound("assets/music/Title.wav", FMOD_LOOP_NORMAL, nullptr, &m_pTitleMusic);
+	m_pSystem->createSound("assets/music/Background.wav", FMOD_LOOP_NORMAL, nullptr, &m_pBackgroundMusic);
 
 	//Channel::isPlaying
 	return 0;
@@ -87,18 +90,38 @@ void SoundManager::PlaySound(Sounds sound)
 	case PLAYERHURT:
 		m_pSystem->playSound(m_pPlayerHurt, NULL, false, NULL);
 		break;
+	case PLAYERJUMP:
+		m_pSystem->playSound(m_pPlayerJump, NULL, false, NULL);
+		break;
 	case GAMESTART:
 		m_pSystem->playSound(m_pGameStart, NULL, false, NULL);
 		break;
-	case MUSIC:
-		m_pSystem->playSound(m_pBackgroundMusic, NULL, false, &m_pMusicChannel);
-		m_musicPlaying = true;
-		break;
 	}
-	m_pMusicChannel->setVolume(m_volume);
 	//m_pSoundChannel->setVolume(m_volume);
 }
 
+void SoundManager::PlayMusic(Music music)
+{
+	if (m_musicPlaying)
+	{
+		m_musicPlaying = false;
+		m_pMusicChannel->stop();
+	}
+
+	switch (music)
+	{
+	case TITLEMUSIC:
+		m_pSystem->playSound(m_pTitleMusic, NULL, false, &m_pMusicChannel);
+		break;
+	case BACKGROUNDMUSIC:
+		m_pSystem->playSound(m_pBackgroundMusic, NULL, false, &m_pMusicChannel);
+		break;
+	}
+
+	m_music = music;
+	m_musicPlaying = true;
+	m_pMusicChannel->setVolume(m_volume);
+}
 
 void SoundManager::ToggleMusic()
 {
@@ -109,7 +132,7 @@ void SoundManager::ToggleMusic()
 	}
 	else
 	{
-		PlaySound(MUSIC);
+		PlayMusic(m_music);
 	}
 }
 
@@ -131,6 +154,11 @@ void SoundManager::DecreaseVol()
 		m_pMusicChannel->setVolume(m_volume);
 		//m_pSoundChannel->setVolume(m_volume);
 	}
+}
+
+float SoundManager::GetVolume()
+{
+	return m_volume;
 }
 
 void SoundManager::Update()

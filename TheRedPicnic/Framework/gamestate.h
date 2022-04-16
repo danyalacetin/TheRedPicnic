@@ -9,6 +9,7 @@
 #include <vector>
 
 class BackBuffer;
+class SoundManager;
 class PlayableCharacter;
 class NonPlayableCharacter;
 class FoodItem;

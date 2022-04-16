@@ -86,7 +86,7 @@ GameMenuState::CreateGameMenu()
 
 	m_pButton = new Button();
 	m_pButton->Initialise(m_pButtonSprite, "Main Menu");
-	m_pButton->SetOnPress([&] {Game::GetInstance().DeleteState(); Game::GetInstance().DeleteState(); });
+	m_pButton->SetOnPress([&] {Game::GetInstance().FadeTo(MainMenu); });
 	m_pGameMenu->AddButton(m_pButton);
 
 	m_pButton = new Button();
