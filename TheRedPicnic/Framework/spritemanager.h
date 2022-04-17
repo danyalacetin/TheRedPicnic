@@ -34,6 +34,7 @@ protected:
 
 	// Splash Screen
 	Sprite* m_pFmodSprite;
+	Sprite* m_pSoundSprite;
 
 	// Background
 	Sprite* m_pBackgroundSprite;

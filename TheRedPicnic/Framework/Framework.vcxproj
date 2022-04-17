@@ -92,6 +92,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="entity.h" />
+    <ClInclude Include="fademanager.h" />
     <ClInclude Include="fontmanager.h" />
     <ClInclude Include="fooditem.h" />
     <ClInclude Include="game.h" />
@@ -128,6 +129,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="entity.cpp" />
+    <ClCompile Include="fademanager.cpp" />
     <ClCompile Include="fontmanager.cpp" />
     <ClCompile Include="fooditem.cpp" />
     <ClCompile Include="game.cpp" />

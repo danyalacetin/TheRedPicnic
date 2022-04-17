@@ -25,6 +25,7 @@ SpriteManager::~SpriteManager()
 
 	// Splash Screen
 	delete m_pFmodSprite;
+	delete m_pSoundSprite;
 
 	// Background
 	delete m_pBackgroundSprite;
@@ -52,7 +53,8 @@ SpriteManager::LoadSprites(BackBuffer& backBuffer)
 	m_pButtonSprite = backBuffer.CreateSprite("assets/Button.png");
 
 	// Splash Screen
-	m_pFmodSprite = backBuffer.CreateSprite("assets/Sound.png");
+	m_pFmodSprite = backBuffer.CreateSprite("assets/splashes/Sound.png");
+	m_pSoundSprite = backBuffer.CreateSprite("assets/splashes/Music.png");
 
 	// Background
 	m_pBackgroundSprite = backBuffer.CreateSprite("assets/Background.png");
@@ -85,6 +87,8 @@ SpriteManager::GetSprite(int i)
 		return m_pButtonSprite;
 	case FMODSPRITE:
 		return m_pFmodSprite;
+	case SOUNDSPRITE:
+		return m_pSoundSprite;
 	case BACKGROUND:
 		return m_pBackgroundSprite;
 	case MIDGROUND:

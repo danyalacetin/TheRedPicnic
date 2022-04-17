@@ -47,6 +47,7 @@ public:
 	void PlayMusic(Music music);
 
 	void ToggleMusic();
+	bool IsMusicPlaying();
 
 	void IncreaseVol();
 	void DecreaseVol();

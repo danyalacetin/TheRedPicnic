@@ -26,7 +26,7 @@ Entity::Entity()
 , m_flashing(false)
 , m_dead(false)
 , m_pushed(false)
-, m_grounded(false)
+, m_grounded(true)
 {
 
 }
@@ -58,6 +58,7 @@ Entity::Process(float deltaTime)
 void
 Entity::ProcessFlash(float deltaTime)
 {
+	//MAKE BETTER YOU APE
 	m_flashTime = m_flashTime - deltaTime*2;
 
 	if (m_flashTime >= 5)

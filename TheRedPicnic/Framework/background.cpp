@@ -14,6 +14,10 @@ Background::Background()
 	: m_pBackgroundSprite(0)
 	, m_pMidgroundSprite(0)
 	, m_pGroundSprite(0)
+	, m_backgroundX{0,0,0}
+	, m_midgroundX{0,0,0}
+	, m_groundX{0,0,0}
+	, m_cameraVelocity(0)
 {
 
 }
@@ -32,16 +36,17 @@ Background::Initialise(Sprite* backgroundSprite, Sprite* midgroundSprite, Sprite
 
 	m_cameraVelocity = 0;
 
-	for (int i = 0; i < 3; i++)
-	{
-		m_backgroundX[i] = 0;
-		m_midgroundX[i] = 0;
-		m_groundX[i] = 0;
-	}
+	m_groundX[0] = 0;
+	m_groundX[1] = m_groundX[0] + m_pGroundSprite->GetWidth();
+	m_groundX[2] = m_groundX[0] - m_pGroundSprite->GetWidth();
 
 	m_backgroundX[0] = 0;
+	m_backgroundX[1] = m_backgroundX[0] + m_pBackgroundSprite->GetWidth();
+	m_backgroundX[2] = m_backgroundX[0] - m_pBackgroundSprite->GetWidth();
+
 	m_midgroundX[0] = 0;
-	m_groundX[0] = 0;
+	m_midgroundX[1] = m_midgroundX[0] + m_pMidgroundSprite->GetWidth();
+	m_midgroundX[2] = m_midgroundX[0] - m_pMidgroundSprite->GetWidth();
 
 	//screen height / background sprite height = ratio
 	//Times both exsiting height and width to scale with screen resolution
@@ -60,6 +65,7 @@ Background::Initialise(Sprite* backgroundSprite, Sprite* midgroundSprite, Sprite
 	m_pGroundSprite->SetHeight(Game::m_screenDimensions.y);
 	m_pGroundSprite->SetY(Game::m_screenDimensions.y /2);
 	m_pGroundSprite->SetX(Game::m_screenDimensions.x / 2);
+
 	return (true);
 }
 

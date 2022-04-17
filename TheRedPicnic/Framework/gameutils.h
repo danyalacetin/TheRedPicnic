@@ -35,11 +35,20 @@ enum TextAlignment
 	ALIGN_CENTRE,
 };
 
+enum Fade
+{
+	FADINGIN,	//getting lighter
+	FADINGOUT,	//getting darker
+	FADEDIN,	//no black
+	FADEDOUT	//all black
+};
+
 enum SpriteCode 
 {
 	TITLE,
 	BUTTON,
 	FMODSPRITE,
+	SOUNDSPRITE,
 	BACKGROUND,
 	MIDGROUND,
 	GROUND,
@@ -55,9 +64,9 @@ enum SpriteCode
 
 enum StateType
 {
-	MainMenu,
+	InGameMenu,
 	InGame,
-	InGameMenu
+	MainMenu
 };
 
 enum NpcState

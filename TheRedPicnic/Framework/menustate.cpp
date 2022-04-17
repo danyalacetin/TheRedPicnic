@@ -114,6 +114,10 @@ MenuState::CreateSplash()
 	//InputEventHandler::GetInstance().Register(COMMAND_MENU_SELECT, [this] {EnterButtonPressed(); });
 
 	m_pSplash = new SplashScreen();
+	m_pSplash->Initialise(ResourceManager::GetInstance().GetSpriteManager().GetSprite(SOUNDSPRITE));
+	m_splashStack.push(m_pSplash);
+
+	m_pSplash = new SplashScreen();
 	m_pSplash->Initialise(ResourceManager::GetInstance().GetSpriteManager().GetSprite(FMODSPRITE));
 	m_splashStack.push(m_pSplash);
 }
@@ -201,11 +205,8 @@ MenuState::CreateAudioOptionsMenu()
 	m_pLabel->SetColour(0xFF, 0x00, 0x00);
 	m_pAudioOptionsMenu->AddChild(m_pLabel);
 
-	//float vIn = SoundManager::GetInstance().GetVolume();
-
-
 	m_pLabel = new Label();
-	m_pLabel->Initialise("Volume: %" + std::to_string(SoundManager::GetInstance().GetVolume()));
+	m_pLabel->Initialise("Volume: " + GetVolume());
 	m_pLabel->SetSize(40);
 	m_pLabel->SetAlignment(ALIGN_CENTRE);
 	m_pLabel->SetColour(0x00, 0x00, 0x00);
@@ -214,19 +215,19 @@ MenuState::CreateAudioOptionsMenu()
 	m_pButton = new Button();
 	m_pButton->Initialise(m_pButtonSprite, "Toggle Music");
 	m_pButton->SetSelected(true);
-	m_pButton->SetOnPress([&] { SoundManager::GetInstance().ToggleMusic(); });
+	m_pButton->SetOnPress([&]{ SoundManager::GetInstance().ToggleMusic(); m_pLabel->SetText("Volume: " + GetVolume()); });
 	m_pAudioOptionsMenu->AddButton(m_pButton);
 
 	m_pButton = new Button();
 	m_pButton->Initialise(m_pButtonSprite, "Increase Volume");
 	m_pButton->SetSelected(false);
-	m_pButton->SetOnPress([&] { SoundManager::GetInstance().IncreaseVol(); m_pLabel->SetText("Volume: %" + std::to_string(SoundManager::GetInstance().GetVolume())); });
+	m_pButton->SetOnPress([&]{ SoundManager::GetInstance().IncreaseVol();m_pLabel->SetText("Volume: " + GetVolume()); });
 	m_pAudioOptionsMenu->AddButton(m_pButton);
 
 	m_pButton = new Button();
 	m_pButton->Initialise(m_pButtonSprite, "Decrease Volume");
 	m_pButton->SetSelected(false);
-	m_pButton->SetOnPress([&] { SoundManager::GetInstance().DecreaseVol(); m_pLabel->SetText("Volume: %" + std::to_string(SoundManager::GetInstance().GetVolume())); });
+	m_pButton->SetOnPress([&]{ SoundManager::GetInstance().DecreaseVol(); m_pLabel->SetText("Volume: " + GetVolume()); });
 	m_pAudioOptionsMenu->AddButton(m_pButton);
 
 	m_pButton = new Button();
@@ -344,6 +345,7 @@ MenuState::ProcessSplash(float deltaTime)
 
 			if (m_splashStack.empty())
 			{
+				//Game::
 				CreateMainMenu();
 			}
 
@@ -359,4 +361,17 @@ void
 MenuState::DrawSplash(BackBuffer& backBuffer)
 {
 	m_splashStack.top()->Draw(backBuffer);
+}
+
+std::string
+MenuState::GetVolume()
+{
+	if (SoundManager::GetInstance().IsMusicPlaying())
+	{
+		return std::to_string(static_cast<int>(SoundManager::GetInstance().GetVolume() * 100));
+	}
+	else
+	{
+		return "0";
+	}
 }

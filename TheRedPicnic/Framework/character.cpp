@@ -29,13 +29,13 @@ Character::Initialise(Sprite* sprite)
 	m_pSprite = new AnimatedSprite();
 	m_pSprite->Initialise(sprite);
 
-	m_pSprite->SetFrameX(0);
-	m_pSprite->SetFrameY(0);
-
-	m_pSprite->SetLooping(true);
-
 	m_width = m_pSprite->GetWidth();
 	m_height = m_pSprite->GetHeight();
+
+	m_pSprite->SetFrameX(0);
+	m_pSprite->SetFrameY(m_pSprite->GetFrameHeight());
+
+	m_pSprite->SetLooping(true);
 
 	return (true);
 }

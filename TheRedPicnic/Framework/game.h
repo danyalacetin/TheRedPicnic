@@ -18,6 +18,7 @@ class MenuState;
 class GameMenuState;
 class State;
 class Background;
+class FadeManager;
 
 class Game
 {
@@ -69,10 +70,14 @@ protected:
 	bool m_drawDebugInfo;
 
 	// Fading Properites
-	bool m_fadeOut;
-	bool m_fadeIn;
+	Fade m_fade;
 	StateType m_fadeTo;
 	float m_fadeOpacity;
+	float m_fadeTime;
+
+	float m_fTime = 0;
+	float m_maxDuration = 4.0f;
+	float m_holdDuration = 2.0f;
 
 	// Game States:
 	std::vector<State*> m_pGameStateStack;

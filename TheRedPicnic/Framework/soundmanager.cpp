@@ -106,39 +106,45 @@ void SoundManager::PlayMusic(Music music)
 	{
 		m_musicPlaying = false;
 		m_pMusicChannel->stop();
-	}
 
-	switch (music)
-	{
-	case TITLEMUSIC:
-		m_pSystem->playSound(m_pTitleMusic, NULL, false, &m_pMusicChannel);
-		break;
-	case BACKGROUNDMUSIC:
-		m_pSystem->playSound(m_pBackgroundMusic, NULL, false, &m_pMusicChannel);
-		break;
-	}
+		switch (music)
+		{
+		case TITLEMUSIC:
+			m_pSystem->playSound(m_pTitleMusic, NULL, false, &m_pMusicChannel);
+			break;
+		case BACKGROUNDMUSIC:
+			m_pSystem->playSound(m_pBackgroundMusic, NULL, false, &m_pMusicChannel);
+			break;
+		}
 
-	m_music = music;
-	m_musicPlaying = true;
-	m_pMusicChannel->setVolume(m_volume);
+		m_music = music;
+		m_musicPlaying = true;
+		m_pMusicChannel->setVolume(m_volume);
+	}
 }
 
 void SoundManager::ToggleMusic()
 {
-	if (m_musicPlaying == true)
+	if (m_musicPlaying)
 	{
-		m_pMusicChannel->stop();
 		m_musicPlaying = false;
+		m_pMusicChannel->stop();
 	}
 	else
 	{
+		m_musicPlaying = true;
 		PlayMusic(m_music);
 	}
 }
 
+bool SoundManager::IsMusicPlaying()
+{
+	return m_musicPlaying;
+}
+
 void SoundManager::IncreaseVol()
 {
-	if (m_volume <= 0.9f)
+	if (m_volume <= 1.0f && m_musicPlaying)
 	{
 		m_volume += 0.1f;
 		m_pMusicChannel->setVolume(m_volume);
@@ -148,7 +154,7 @@ void SoundManager::IncreaseVol()
 
 void SoundManager::DecreaseVol()
 {
-	if (m_volume >= 0.1f)
+	if (m_volume >= 0.1f && m_musicPlaying)
 	{
 		m_volume -= 0.1f;
 		m_pMusicChannel->setVolume(m_volume);

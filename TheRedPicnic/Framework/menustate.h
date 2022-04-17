@@ -6,6 +6,7 @@
 
 // Library includes:
 #include <stack> 
+#include <string>
 
 class BackBuffer;
 class Sprite;
@@ -41,6 +42,8 @@ public:
 	void UpButtonPressed();
 	void DownButtonPressed();
 	void EnterButtonPressed();
+
+	std::string GetVolume();
 
 	std::stack<Menu*> GetMenuStack();
 

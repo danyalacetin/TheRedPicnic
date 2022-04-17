@@ -171,6 +171,9 @@
     <ClInclude Include="soundmanager.h">
       <Filter>Header Files\Resource Management</Filter>
     </ClInclude>
+    <ClInclude Include="fademanager.h">
+      <Filter>Header Files\Resource Management</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp">
@@ -276,6 +279,9 @@
       <Filter>Source Files\Menus</Filter>
     </ClCompile>
     <ClCompile Include="soundmanager.cpp">
+      <Filter>Source Files\Resource Management</Filter>
+    </ClCompile>
+    <ClCompile Include="fademanager.cpp">
       <Filter>Source Files\Resource Management</Filter>
     </ClCompile>
   </ItemGroup>

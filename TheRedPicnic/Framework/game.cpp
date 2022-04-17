@@ -14,6 +14,7 @@
 #include "gamemenustate.h"
 #include "background.h"
 #include "soundmanager.h"
+#include "fademanager.h"
 
 // Library includes:
 #include <cassert>
@@ -126,10 +127,9 @@ Game::Initialise()
 
 	m_pGameStateStack.push_back(m_pMenuState);
 
-	m_fadeOut = false;
-	m_fadeIn = true;
-	m_fadeTo = MainMenu;
-	m_fadeOpacity = 255; //full black
+	m_fadeTime = 2;
+	m_fade = FADEDOUT;
+	m_fadeOpacity = 255;
 
 	return (true);
 }
@@ -192,27 +192,38 @@ Game::Process(float deltaTime)
 		m_frameCount = 0;
 	}
 
-	if (m_fadeIn)
+	switch (m_fade)
 	{
-		m_fadeOpacity -= 5;
+	case FADINGIN:
+		//FIX TIME CONVERTION
+		m_fadeOpacity -= deltaTime * 500;
 
 		if (m_fadeOpacity <= 0)
 		{
-			m_fadeIn = false;
+			m_fade = FADEDIN;
 			m_fadeOpacity = 0;
 		}
-	}
+		break;
 
-	if (m_fadeOut)
-	{
-		m_fadeOpacity += 5;
+	case FADINGOUT:
+		//FIX TIME CONVERTION
+		m_fadeOpacity += deltaTime * 500;
 
 		if (m_fadeOpacity >= 255)
 		{
-
-			m_fadeOut = false;
-			m_fadeIn = true;
+			m_fade = FADEDOUT;
 			m_fadeOpacity = 255;
+		}
+		break;
+
+	case FADEDOUT:
+		
+		m_fadeTime -= deltaTime * 10;
+
+		if (m_fadeTime <= 0)
+		{
+			m_fade = FADINGIN;
+			m_fadeTime = 2;
 
 			switch (m_fadeTo)
 			{
@@ -220,20 +231,25 @@ Game::Process(float deltaTime)
 				DeleteState();
 				DeleteState();
 				break;
+
 			case InGame:
 				AddGameState();
 				break;
+
+			default:
+				break;
 			}
 		}
-	}
-	else
-	{
-		// Plays Sound:
-		SoundManager::GetInstance().Update();
+		break;
 
+	case FADEDIN:
 		// Update the game world simulation:
 		m_pGameStateStack.back()->Process(deltaTime);
+		break;
 	}
+
+	// Plays Sound:
+	SoundManager::GetInstance().Update();
 }
 
 void 
@@ -252,6 +268,7 @@ Game::Draw(BackBuffer& backBuffer)
 
 	m_pGameStateStack.back()->Draw(backBuffer);						//Draws current state.
 
+	//draws fade
 	backBuffer.SetDrawColour(0,0,0, m_fadeOpacity);
 	backBuffer.DrawRectangle(0, 0, m_screenDimensions.x, m_screenDimensions.y);
 	backBuffer.Present();
@@ -296,7 +313,7 @@ void
 Game::FadeTo(StateType state)
 {
 	m_fadeTo = state;
-	m_fadeOut = true;
+	m_fade = FADINGOUT;
 }
 
 Background*
